@@ -568,6 +568,15 @@ body{
   color:#7c3aed;font-weight:700;margin-bottom:9px;}
 .overall-msg p{font-size:0.84rem;color:#2e2b4a;line-height:2.0;}
 
+/* ─── OM-CARD (鑑定の核心カード) ─── */
+.om-card{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;
+  border-left:3px solid rgba(124,58,237,0.25);
+  box-shadow:0 1px 6px rgba(124,58,237,0.06);}
+.om-card-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.10em;
+  color:#7c3aed;font-weight:700;margin-bottom:6px;}
+.om-card-value{font-size:1.0rem;font-weight:700;color:#1e1b2e;line-height:1.7;margin-bottom:4px;}
+.om-card-sub{font-size:0.82rem;color:#3a3650;line-height:1.9;}
+
 /* ─── MOBILE ─── */
 @media(max-width:600px){
   .container{padding:12px 10px;}
@@ -667,7 +676,7 @@ body{
       <div class="ex-title">ヴェーダ数秘術とは</div>
       <p>インドの古代哲学をもとにした数字の占術です。生年月日から3つの核となる数字を導き出し、<strong>その数字に対応する惑星のエネルギー</strong>があなたの性格・人生の方向性・時代の影響を表すと考えます。数字は1〜9のみ使い、すべて最終的に1桁に還元します。</p>
     </div>
-    <div class="key-cards" id="r-keycards"></div>
+    <div class="key-cards" id="r-keycards" style="display:none;"></div>
     <div class="explain-box">
       <div class="ex-title">なぜこの3つの数字が出るの？</div>
       <table class="calc-table" id="r-calc-table"></table>
@@ -1188,34 +1197,43 @@ function calculate() {
   document.getElementById('r-date').textContent = `${year}年${month}月${day}日`;
 
   // ① 鑑定の核心（冒頭に表示）
-  const missingDescShort = missing.length===0
-    ? `生年月日に1〜9すべての数字が揃っており、<span class="hl">バランスのとれたエネルギー</span>を持っています。`
+  const mulKw = (NUMS[mul].kw||[]).slice(0,4).join('・');
+  const bhaKw = (NUMS[bha].kw||[]).slice(0,4).join('・');
+  const missingTheme = missing.length===0
+    ? ''
     : missing.includes(5)
-      ? `グリッド中心「5（水星）」が欠けており、<span class="hl">自分の軸・中心点を育てること</span>が今世の最重要テーマです。`
-      : `グリッドに欠けた数字（${missing.map(n=>PLANET[n]).join('・')}）は弱点ではなく、<span class="hl2">意識的に育てることで開花する伸びしろ</span>です。`;
+      ? `<div class="om-card" style="border-left:3px solid #7c3aed;">
+          <div class="om-card-label">今世の最重要テーマ</div>
+          <div class="om-card-value"><span class="hl">自分の軸・中心点を育てること</span></div>
+          <div class="om-card-sub">グリッドの中心「5」が欠けています。周囲に流されず、自分自身の価値観と判断軸を築いていくことが魂の最大の修行です。</div>
+        </div>`
+      : `<div class="om-card" style="border-left:3px solid #7c3aed;">
+          <div class="om-card-label">今世で育てるテーマ</div>
+          <div class="om-card-value"><span class="hl2">意識的に育てることで開花する伸びしろ</span></div>
+          <div class="om-card-sub">欠けた数字（${missing.join('・')}）は弱点ではなく、今世で取り組むことで誰より深く体得できるエネルギーです。</div>
+        </div>`;
   document.getElementById('r-overall').innerHTML=`
-    <div class="om-section" style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(219,39,119,0.04));border-radius:14px;padding:20px 22px;margin-bottom:14px;">
-      <p style="font-size:1.05rem;font-weight:700;color:#1e1b2e;line-height:1.9;margin-bottom:10px;">あなたは <strong style="color:${COLORS[mul]}">${PLANET[mul]}（数字${mul}）</strong> として生まれ、<strong style="color:${COLORS[bha]}">${PLANET[bha]}（数字${bha}）</strong> の世界へ歩んでいく。</p>
-      <p style="font-size:0.92rem;color:#2e2b4a;line-height:2.0;">これが今世のあなたの魂の旅の構造です。${missingDescShort} 数字は運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>です。</p>
+    <div class="om-card" style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(219,39,119,0.04));border:none;margin-bottom:4px;">
+      <div class="om-card-label">この鑑定について</div>
+      <div class="om-card-value" style="font-size:0.92rem;font-weight:400;line-height:2.0;color:#2e2b4a;">生年月日から導き出した数字が、あなたの持って生まれたエネルギーと、魂が向かっていく方向を示しています。<br>数字は運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>です。</div>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;">
-      <div style="flex:1;min-width:160px;padding:12px 14px;background:rgba(0,0,0,0.02);border-radius:10px;border-left:3px solid ${COLORS[mul]};">
-        <div style="font-size:0.72rem;color:var(--muted);font-weight:700;margin-bottom:4px;">ムーランク（魂の本質）</div>
-        <div style="font-size:0.92rem;font-weight:700;color:${COLORS[mul]};">${mul} ${PLANET[mul]}</div>
-        <div style="font-size:0.78rem;color:#3a3650;margin-top:3px;">${NUMS[mul].mulank?.slice(0,50)||''}…</div>
-      </div>
-      <div style="flex:1;min-width:160px;padding:12px 14px;background:rgba(0,0,0,0.02);border-radius:10px;border-left:3px solid ${COLORS[bha]};">
-        <div style="font-size:0.72rem;color:var(--muted);font-weight:700;margin-bottom:4px;">バーグヤンク（魂の使命）</div>
-        <div style="font-size:0.92rem;font-weight:700;color:${COLORS[bha]};">${bha} ${PLANET[bha]}</div>
-        <div style="font-size:0.78rem;color:#3a3650;margin-top:3px;">${NUMS[bha].bhagyank?.slice(0,50)||''}…</div>
-      </div>
-      <div style="flex:1;min-width:160px;padding:12px 14px;background:rgba(0,0,0,0.02);border-radius:10px;border-left:3px solid ${COLORS[py]};">
-        <div style="font-size:0.72rem;color:var(--muted);font-weight:700;margin-bottom:4px;">今この時期（個人年${py}）</div>
-        <div style="font-size:0.92rem;font-weight:700;color:${COLORS[py]};">${PERIOD_READING[py]?.theme||''}</div>
-        <div style="font-size:0.78rem;color:#3a3650;margin-top:3px;">${PLANET[py]}のエネルギー</div>
-      </div>
+    <div class="om-card" style="border-left:3px solid ${COLORS[mul]};">
+      <div class="om-card-label">あなたが生まれ持ったエネルギー（誕生日から）</div>
+      <div class="om-card-value" style="color:${COLORS[mul]};">${mulKw}</div>
+      <div class="om-card-sub">${NUMS[mul].mulank||''}</div>
     </div>
-    <p style="font-size:0.82rem;color:#504e68;margin-top:14px;line-height:1.9;text-align:center;">↓ 以下に詳しい読み解きと実践アドバイスが続きます</p>
+    <div class="om-card" style="border-left:3px solid ${COLORS[bha]};">
+      <div class="om-card-label">魂が向かっている方向（生年月日の合計から）</div>
+      <div class="om-card-value" style="color:${COLORS[bha]};">${bhaKw}</div>
+      <div class="om-card-sub">${NUMS[bha].bhagyank||''}</div>
+    </div>
+    ${missingTheme}
+    <div class="om-card" style="border-left:3px solid ${COLORS[py]};">
+      <div class="om-card-label">今この時期のテーマ（個人年 ${py}）</div>
+      <div class="om-card-value" style="color:${COLORS[py]};">「${PERIOD_READING[py]?.theme||''}」</div>
+      <div class="om-card-sub">${PERIOD_READING[py]?.body||''}</div>
+    </div>
+    <p style="font-size:0.80rem;color:#504e68;margin-top:6px;line-height:1.9;text-align:center;">↓ 以下に詳しい読み解きと実践アドバイスが続きます</p>
   `;
 
   // ② 基本数字カード
