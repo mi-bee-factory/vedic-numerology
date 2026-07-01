@@ -220,7 +220,7 @@ body{
 }
 .nm-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:16px;}
 .nm-planet-art{width:64px;height:64px;flex-shrink:0;}
-.nm-info .nm-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;}
+.nm-info .nm-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:#7c3aed;font-weight:700;}
 .nm-info .nm-title{font-size:1.2rem;font-weight:700;margin:2px 0;}
 .nm-info .nm-role{font-size:0.78rem;color:#3a3650;}
 .nm-body{font-size:0.88rem;color:#1e1b2e;line-height:2.0;}
@@ -560,6 +560,20 @@ body{
   cursor:pointer;letter-spacing:0.05em;box-shadow:0 4px 18px rgba(124,58,237,0.25);}
 .btn-pdf:hover{opacity:0.87;}
 
+/* ─── SCROLL CTA BUTTON ─── */
+.scroll-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  color:#fff;text-decoration:none;font-weight:700;font-size:0.84rem;
+  padding:11px 24px;border-radius:30px;
+  box-shadow:0 4px 18px rgba(124,58,237,0.30);
+  transition:box-shadow 0.2s,transform 0.2s;
+  letter-spacing:0.04em;
+}
+.scroll-cta:hover{box-shadow:0 6px 26px rgba(124,58,237,0.45);transform:translateY(-2px);}
+@keyframes bounce-arrow{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+.scroll-cta .arrow{display:inline-block;animation:bounce-arrow 1.4s ease-in-out infinite;}
+
 /* ─── OVERALL SECTIONS ─── */
 .overall-msg{text-align:left;}
 .om-section{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid rgba(124,58,237,0.08);}
@@ -777,6 +791,19 @@ body{
 (function(){
   if(sessionStorage.getItem('vn_pw')==='ok') return;
   document.getElementById('pw-overlay').style.display='flex';
+})();
+// 入力履歴を復元
+(function(){
+  try{
+    const saved = localStorage.getItem('vn_form');
+    if(!saved) return;
+    const d = JSON.parse(saved);
+    if(d.sei) document.getElementById('inp-sei').value=d.sei;
+    if(d.mei) document.getElementById('inp-mei').value=d.mei;
+    if(d.year) document.getElementById('inp-year').value=d.year;
+    if(d.month) document.getElementById('inp-month').value=d.month;
+    if(d.day) document.getElementById('inp-day').value=d.day;
+  }catch(e){}
 })();
 function checkPw(){
   if(document.getElementById('pw-input').value==='test'){
@@ -1166,6 +1193,8 @@ function calculate() {
   const month = parseInt(document.getElementById('inp-month').value);
   const day   = parseInt(document.getElementById('inp-day').value);
   if(!year||!month||!day){ alert('生年月日を入力してください'); return; }
+  // 入力を保存
+  try{ localStorage.setItem('vn_form', JSON.stringify({sei,mei,year,month,day})); }catch(e){}
 
   const now=new Date();
   const curYear=now.getFullYear(), curMonth=now.getMonth()+1, curDay=now.getDate();
@@ -1215,14 +1244,12 @@ function calculate() {
   document.getElementById('r-overall').innerHTML=`
     <p style="font-size:0.82rem;color:#504e68;line-height:1.9;margin-bottom:14px;">生年月日から導き出した数字が、あなたの持って生まれたエネルギーと、魂が向かっていく方向を示しています。数字は運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>です。</p>
     <div class="om-card" style="border-left:3px solid ${COLORS[bha]};">
-      <div class="om-card-label">魂が向かっている方向・使命（生年月日の合計から）</div>
+      <div class="om-card-label">今世で向かっていく方向・使命（生年月日の合計から）</div>
       <div class="om-card-value" style="color:${COLORS[bha]};">${bhaKw}</div>
-      <div class="om-card-sub">${NUMS[bha].bhagyank||''}</div>
     </div>
     <div class="om-card" style="border-left:3px solid ${COLORS[mul]};">
-      <div class="om-card-label">生まれ持った本質のエネルギー（誕生日から）</div>
+      <div class="om-card-label">過去世から持ち越したエネルギー（誕生日から）</div>
       <div class="om-card-value" style="color:${COLORS[mul]};">${mulKw}</div>
-      <div class="om-card-sub">${NUMS[mul].mulank||''}</div>
     </div>
     ${missingTheme}
     <div class="om-card" style="border-left:3px solid ${COLORS[py]};">
@@ -1230,10 +1257,10 @@ function calculate() {
       <div class="om-card-value" style="color:${COLORS[py]};">「${PERIOD_READING[py]?.theme||''}」</div>
       <div class="om-card-sub">${PERIOD_READING[py]?.body||''}</div>
     </div>
-    <div style="text-align:center;margin-top:6px;">
-      <a href="#r-num-meanings" onclick="event.preventDefault();document.getElementById('r-num-meanings').scrollIntoView({behavior:'smooth',block:'start'});"
-         style="font-size:0.82rem;color:#7c3aed;text-decoration:none;font-weight:600;padding:8px 18px;border:1.5px solid rgba(124,58,237,0.3);border-radius:20px;display:inline-block;">
-        ↓ 詳しい読み解きと実践アドバイスへ
+    <div style="text-align:center;margin-top:18px;">
+      <a href="#r-num-meanings" class="scroll-cta"
+         onclick="event.preventDefault();document.getElementById('r-num-meanings').scrollIntoView({behavior:'smooth',block:'start'});">
+        <span class="arrow">↓</span> 詳しい読み解きと実践アドバイスへ
       </a>
     </div>
   `;
@@ -1310,13 +1337,13 @@ function calculate() {
             <div class="myth-nature">${MYTH[r.num]?.nature||''}</div>
           </div>
           <div class="chakra-box">
-            ${r.field==='bhagyank' ? `<div style="font-size:0.76rem;color:#504e68;line-height:1.8;margin-bottom:10px;padding:8px 12px;background:rgba(124,58,237,0.04);border-radius:8px;">💡 <strong>チャクラとは？</strong> 体内に存在する7つのエネルギーセンターのこと。それぞれが特定の感情・機能・人生領域を司るとされ、整えることで対応するエネルギーが活性化されます。</div>` : ''}
+            ${r.field==='bhagyank' ? `<div style="font-size:0.80rem;color:#3a3650;line-height:1.9;margin-bottom:12px;padding:10px 14px;background:rgba(124,58,237,0.04);border-left:3px solid rgba(124,58,237,0.3);border-radius:0 8px 8px 0;">インドのヴェーダ哲学・ヨーガの伝統では、人体には7つのエネルギーの要所「<strong>チャクラ</strong>」があるとされます。それぞれが心身の特定の領域を司り、対応する実践によって整えることでエネルギーが活性化されます。</div>` : ''}
             <div class="chakra-reason">${
               r.field==='bhagyank'
-                ? `<strong>${PLANET[r.num]}${PLANET_SK[r.num]!==PLANET[r.num]?'（'+PLANET_SK[r.num]+'）':''}</strong>の惑星実践を続けることで<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>が整い、あなたの魂の使命（バーグヤンク）のエネルギーが自然に発揮されるようになります。`
+                ? `<strong>${PLANET[r.num]}（${PLANET_SK[r.num]}）</strong>の惑星実践は<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>に対応しています。このチャクラを整えることで、あなたの魂の使命（バーグヤンク）のエネルギーが自然に発揮されるようになります。`
               : r.field==='mulank'
-                ? `<span style="font-size:0.78rem;color:#7c3aed;font-weight:700;">${PLANET_SK[r.num]}（${PLANET[r.num]}）のチャクラ</span>`
-              : `<span style="font-size:0.78rem;color:#7c3aed;font-weight:700;">${PLANET_SK[r.num]}（${PLANET[r.num]}）のチャクラ</span>`
+                ? `<span style="font-size:0.82rem;color:#3a3650;line-height:1.8;">${PLANET[r.num]}（${PLANET_SK[r.num]}）は<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>に対応しています。バーグヤンクの実践を土台にすることで、このチャクラも自然に育まれます。</span>`
+              : `<span style="font-size:0.82rem;color:#3a3650;line-height:1.8;">${PLANET[r.num]}（${PLANET_SK[r.num]}）は<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>に対応しています。バーグヤンクの実践を土台にすることで、このチャクラも自然に育まれます。</span>`
             }</div>
             <div class="chakra-name"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${CHAKRA[r.num].color};box-shadow:0 0 6px ${CHAKRA[r.num].color}66;flex-shrink:0;"></span> 第${CHAKRA[r.num].chakraNum}チャクラ：${CHAKRA[r.num].name}（${CHAKRA[r.num].en}）</div>
             <div class="chakra-what">${CHAKRA[r.num].what}</div>
@@ -1330,7 +1357,7 @@ function calculate() {
               <div class="daily-item"><strong>取り入れたい食材</strong>：${PLANET_DAILY[r.num].food}</div>
               <div class="daily-item full"><strong>マントラ（吉日の朝に唱える）</strong>：${PLANET_DAILY[r.num].mantra}</div>
               <div class="daily-item full"><strong>日常の実践行動</strong>：${PLANET_DAILY[r.num].act}</div>
-            </div>` : `<div style="font-size:0.80rem;color:#504e68;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,0.04);border-radius:7px;">💡 バーグヤンクの実践が魂の使命への道筋です。その実践が土台となり、この数字のチャクラも自然に育まれます。</div>`}
+            </div>` : ''}
           </div>
         </div>
       </div>`;
