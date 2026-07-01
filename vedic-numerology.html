@@ -1215,34 +1215,43 @@ function calculate() {
   // ① 鑑定の核心（冒頭に表示）
   const mulKw = (NUMS[mul].kw||[]).slice(0,4).join('・');
   const bhaKw = (NUMS[bha].kw||[]).slice(0,4).join('・');
+  // 惑星の固有名詞（太陽・月・水星…ラーフ・ケートゥ、および「グル」等のサンスクリット名）を含む一文を除去
+  const stripPlanetMentions = (text) => (text||'')
+    .split(/(?<=。)/)
+    .filter(sentence => !/太陽|月|水星|金星|木星|土星|火星|ラーフ|ケートゥ|グル(?!ープ)/.test(sentence))
+    .join('');
+  const mulDesc = stripPlanetMentions(NUMS[mul].mulank);
+  const bhaDesc = stripPlanetMentions(NUMS[bha].bhagyank);
   const missingTheme = missing.length===0
     ? ''
     : missing.includes(5)
       ? `<div class="om-card" style="border-left:3px solid #7c3aed;">
           <div class="om-card-label">今世の最重要テーマ</div>
           <div class="om-card-value"><span class="hl">自分の軸・中心点を育てること</span></div>
-          <div class="om-card-sub" style="font-size:0.78rem;">詳細はセクション⑤のロー・シュー・グリッドで確認できます。</div>
+          <div class="om-card-sub">ロー・シュー・グリッドの中心にあたる数字「5」が、あなたの生年月日には含まれていません。中心が空いているぶん、周囲の意見に流されやすくなりますが、そのぶん自分自身の価値観や判断基準を意識して育てることが、今世でもっとも取り組みたいテーマです。</div>
         </div>`
       : `<div class="om-card" style="border-left:3px solid #7c3aed;">
           <div class="om-card-label">今世で育てるテーマ</div>
           <div class="om-card-value"><span class="hl2">意識的に育てることで開花する伸びしろ</span></div>
-          <div class="om-card-sub" style="font-size:0.78rem;">詳細はセクション⑤のロー・シュー・グリッドで確認できます。</div>
+          <div class="om-card-sub">生年月日の中に数字「${missing.join('・')}」が含まれていません。これは弱点ではなく、まだ意識的に使われていないぶん、これから育てることで人一倍深く体得できるエネルギーです。</div>
         </div>`;
   document.getElementById('r-overall').innerHTML=`
     <p style="font-size:0.82rem;color:#504e68;line-height:1.9;margin-bottom:14px;">生年月日から導き出した数字が、あなたの持って生まれたエネルギーと、魂が向かっていく方向を示しています。数字は運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>です。</p>
     <div class="om-card" style="border-left:3px solid ${COLORS[bha]};">
       <div class="om-card-label">今世で向かっていく方向・使命（生年月日の合計から）</div>
-      <div class="om-card-value" style="color:${COLORS[bha]};">${bhaKw}</div>
+      <div class="om-card-value">${bhaKw}</div>
+      <div class="om-card-sub">${bhaDesc}</div>
     </div>
     <div class="om-card" style="border-left:3px solid ${COLORS[mul]};">
       <div class="om-card-label">過去世から持ち越したエネルギー（誕生日から）</div>
-      <div class="om-card-value" style="color:${COLORS[mul]};">${mulKw}</div>
+      <div class="om-card-value">${mulKw}</div>
+      <div class="om-card-sub">${mulDesc}</div>
     </div>
     ${missingTheme}
     <div class="om-card" style="border-left:3px solid ${COLORS[py]};">
       <div class="om-card-label">今この時期のテーマ（個人年 ${py}）</div>
-      <div class="om-card-value" style="color:${COLORS[py]};">「${PERIOD_READING[py]?.theme||''}」</div>
-      <div class="om-card-sub">${PERIOD_READING[py]?.body||''}</div>
+      <div class="om-card-value">「${PERIOD_READING[py]?.theme||''}」</div>
+      <div class="om-card-sub">${stripPlanetMentions(PERIOD_READING[py]?.body)}</div>
     </div>
     <div style="text-align:center;margin-top:18px;">
       <a href="#r-num-meanings" class="scroll-cta"
