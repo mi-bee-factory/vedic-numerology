@@ -792,19 +792,6 @@ body{
   if(sessionStorage.getItem('vn_pw')==='ok') return;
   document.getElementById('pw-overlay').style.display='flex';
 })();
-// 入力履歴を復元
-(function(){
-  try{
-    const saved = localStorage.getItem('vn_form');
-    if(!saved) return;
-    const d = JSON.parse(saved);
-    if(d.sei) document.getElementById('inp-sei').value=d.sei;
-    if(d.mei) document.getElementById('inp-mei').value=d.mei;
-    if(d.year) document.getElementById('inp-year').value=d.year;
-    if(d.month) document.getElementById('inp-month').value=d.month;
-    if(d.day) document.getElementById('inp-day').value=d.day;
-  }catch(e){}
-})();
 function checkPw(){
   if(document.getElementById('pw-input').value==='test'){
     sessionStorage.setItem('vn_pw','ok');
@@ -1616,6 +1603,20 @@ function resetForm(){
 }
 
 initSelects();
+
+// 入力履歴を復元（select の選択肢が生成された後に実行）
+(function(){
+  try{
+    const saved = localStorage.getItem('vn_form');
+    if(!saved) return;
+    const d = JSON.parse(saved);
+    if(d.sei) document.getElementById('inp-sei').value=d.sei;
+    if(d.mei) document.getElementById('inp-mei').value=d.mei;
+    if(d.year) document.getElementById('inp-year').value=d.year;
+    if(d.month) document.getElementById('inp-month').value=d.month;
+    if(d.day) document.getElementById('inp-day').value=d.day;
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
