@@ -1214,15 +1214,15 @@ function calculate() {
         </div>`;
   document.getElementById('r-overall').innerHTML=`
     <p style="font-size:0.82rem;color:#504e68;line-height:1.9;margin-bottom:14px;">生年月日から導き出した数字が、あなたの持って生まれたエネルギーと、魂が向かっていく方向を示しています。数字は運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>です。</p>
-    <div class="om-card" style="border-left:3px solid ${COLORS[mul]};">
-      <div class="om-card-label">あなたが生まれ持ったエネルギー（誕生日から）</div>
-      <div class="om-card-value" style="color:${COLORS[mul]};">${mulKw}</div>
-      <div class="om-card-sub">${NUMS[mul].mulank||''}</div>
-    </div>
     <div class="om-card" style="border-left:3px solid ${COLORS[bha]};">
-      <div class="om-card-label">魂が向かっている方向（生年月日の合計から）</div>
+      <div class="om-card-label">魂が向かっている方向・使命（生年月日の合計から）</div>
       <div class="om-card-value" style="color:${COLORS[bha]};">${bhaKw}</div>
       <div class="om-card-sub">${NUMS[bha].bhagyank||''}</div>
+    </div>
+    <div class="om-card" style="border-left:3px solid ${COLORS[mul]};">
+      <div class="om-card-label">生まれ持った本質のエネルギー（誕生日から）</div>
+      <div class="om-card-value" style="color:${COLORS[mul]};">${mulKw}</div>
+      <div class="om-card-sub">${NUMS[mul].mulank||''}</div>
     </div>
     ${missingTheme}
     <div class="om-card" style="border-left:3px solid ${COLORS[py]};">
@@ -1282,8 +1282,8 @@ function calculate() {
   // ② 各数字の意味
   const meanings=document.getElementById('r-num-meanings');
   const readItems=[
-    {num:mul,label:'ムーランク（魂の本質）',role:'素の性格・本能的な行動パターン・生まれ持ったエネルギーの質',field:'mulank',showKarma:false},
     {num:bha,label:'バーグヤンク（運命の方向）',role:'人生全体が向かっている方向・魂の使命・長期的なテーマ',field:'bhagyank',showKarma:false},
+    {num:mul,label:'ムーランク（魂の本質）',role:'素の性格・本能的な行動パターン・生まれ持ったエネルギーの質',field:'mulank',showKarma:false},
     {num:yr, label:'年の数字（時代の影響）',  role:'生まれた時代から受け取ったエネルギー。幼少期の環境・親世代の価値観',field:'yearNum',showKarma:false},
   ];
   meanings.innerHTML=readItems.map(r=>{
@@ -1310,17 +1310,17 @@ function calculate() {
             <div class="myth-nature">${MYTH[r.num]?.nature||''}</div>
           </div>
           <div class="chakra-box">
-            ${r.field==='mulank' ? `<div style="font-size:0.76rem;color:#504e68;line-height:1.8;margin-bottom:10px;padding:8px 12px;background:rgba(124,58,237,0.04);border-radius:8px;">💡 <strong>チャクラとは？</strong> 体内に存在する7つのエネルギーセンターのこと。それぞれが特定の感情・機能・人生領域を司るとされ、整えることで対応するエネルギーが活性化されます。</div>` : ''}
+            ${r.field==='bhagyank' ? `<div style="font-size:0.76rem;color:#504e68;line-height:1.8;margin-bottom:10px;padding:8px 12px;background:rgba(124,58,237,0.04);border-radius:8px;">💡 <strong>チャクラとは？</strong> 体内に存在する7つのエネルギーセンターのこと。それぞれが特定の感情・機能・人生領域を司るとされ、整えることで対応するエネルギーが活性化されます。</div>` : ''}
             <div class="chakra-reason">${
-              r.field==='mulank'
-                ? `<strong>${PLANET[r.num]}${PLANET_SK[r.num]!==PLANET[r.num]?'（'+PLANET_SK[r.num]+'）':''}</strong>の惑星実践を続けることで<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>が整い、あなたが本来持つムーランクのエネルギーが自然に発揮されるようになります。`
-              : r.field==='bhagyank'
+              r.field==='bhagyank'
+                ? `<strong>${PLANET[r.num]}${PLANET_SK[r.num]!==PLANET[r.num]?'（'+PLANET_SK[r.num]+'）':''}</strong>の惑星実践を続けることで<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>が整い、あなたの魂の使命（バーグヤンク）のエネルギーが自然に発揮されるようになります。`
+              : r.field==='mulank'
                 ? `<span style="font-size:0.78rem;color:#7c3aed;font-weight:700;">${PLANET_SK[r.num]}（${PLANET[r.num]}）のチャクラ</span>`
               : `<span style="font-size:0.78rem;color:#7c3aed;font-weight:700;">${PLANET_SK[r.num]}（${PLANET[r.num]}）のチャクラ</span>`
             }</div>
             <div class="chakra-name"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${CHAKRA[r.num].color};box-shadow:0 0 6px ${CHAKRA[r.num].color}66;flex-shrink:0;"></span> 第${CHAKRA[r.num].chakraNum}チャクラ：${CHAKRA[r.num].name}（${CHAKRA[r.num].en}）</div>
             <div class="chakra-what">${CHAKRA[r.num].what}</div>
-            ${r.field==='mulank' ? `
+            ${r.field==='bhagyank' ? `
             <div class="daily-bridge">${PLANET[r.num]}（数字${r.num}）の惑星実践でこのチャクラを整える</div>
             <div class="daily-note">以下の色・石・食材を日常に取り入れ、吉日（${PLANET_DAILY[r.num].day}）を意識することで${PLANET[r.num]}のエネルギーが高まり、第${CHAKRA[r.num].chakraNum}チャクラが活性化されます。</div>
             <div class="daily-grid">
@@ -1330,7 +1330,7 @@ function calculate() {
               <div class="daily-item"><strong>取り入れたい食材</strong>：${PLANET_DAILY[r.num].food}</div>
               <div class="daily-item full"><strong>マントラ（吉日の朝に唱える）</strong>：${PLANET_DAILY[r.num].mantra}</div>
               <div class="daily-item full"><strong>日常の実践行動</strong>：${PLANET_DAILY[r.num].act}</div>
-            </div>` : `<div style="font-size:0.80rem;color:#504e68;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,0.04);border-radius:7px;">💡 まずはムーランクの実践を優先してください。その実践が土台となり、この数字のチャクラも自然に育まれます。</div>`}
+            </div>` : `<div style="font-size:0.80rem;color:#504e68;margin-top:8px;padding:6px 10px;background:rgba(124,58,237,0.04);border-radius:7px;">💡 バーグヤンクの実践が魂の使命への道筋です。その実践が土台となり、この数字のチャクラも自然に育まれます。</div>`}
           </div>
         </div>
       </div>`;
