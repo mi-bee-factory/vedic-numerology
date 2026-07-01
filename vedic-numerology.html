@@ -513,13 +513,16 @@ body{
 .dash-py{font-size:0.82rem;font-weight:600;color:#1e1b2e;}
 .dash-theme{font-size:0.88rem;color:#1e1b2e;font-weight:600;}
 .dash-body{font-size:0.92rem;color:#1e1b2e;line-height:2.0;margin-bottom:8px;}
-.dash-hints{display:flex;flex-wrap:wrap;gap:12px;font-size:0.84rem;}
+.dash-hints{font-size:0.84rem;line-height:2.2;}
 .dash-good{
   color:#1e1b2e;font-weight:700;
   background:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
   display:inline;
+  margin-right:14px;
 }
-.dash-care{color:#92400e;}
+.dash-care{color:#92400e;display:inline;}
 
 /* ─── YEAR CYCLE TABLE additional ─── */
 .year-cycle-table tr.past-year td{opacity:0.5;}
