@@ -1328,7 +1328,7 @@ function calculate() {
           <div style="margin-top:6px;">${d.kw.map(k=>`<span class="tag" style="background:${cl};color:${c};border:1px solid ${c}33;">${k}</span>`).join('')}</div>
           ${karmaNote}
           <div class="myth-box">
-            <div class="myth-name">${MYTH[r.num]?.name||''}</div>
+            <div class="myth-name">${MYTH[r.num]?.name||''}<span style="font-weight:400;color:#7c3aed;font-size:0.68rem;margin-left:6px;">＝インド神話で${PLANET[r.num]}を司る神</span></div>
             <div class="myth-body">${MYTH[r.num]?.myth||''}</div>
             <div class="myth-nature">${MYTH[r.num]?.nature||''}</div>
           </div>
@@ -1341,8 +1341,8 @@ function calculate() {
                 ? `<span style="font-size:0.82rem;color:#3a3650;line-height:1.8;">${PLANET[r.num]}（${PLANET_SK[r.num]}）は<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>に対応しています。バーグヤンクの実践を土台にすることで、このチャクラも自然に育まれます。</span>`
               : `<span style="font-size:0.82rem;color:#3a3650;line-height:1.8;">${PLANET[r.num]}（${PLANET_SK[r.num]}）は<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>に対応しています。バーグヤンクの実践を土台にすることで、このチャクラも自然に育まれます。</span>`
             }</div>
-            <div class="chakra-name"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${CHAKRA[r.num].color};box-shadow:0 0 6px ${CHAKRA[r.num].color}66;flex-shrink:0;"></span> 第${CHAKRA[r.num].chakraNum}チャクラ：${CHAKRA[r.num].name}（${CHAKRA[r.num].en}）</div>
-            <div class="chakra-what">${CHAKRA[r.num].what}</div>
+            <div class="chakra-name"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${CHAKRA[r.num].color};box-shadow:0 0 6px ${CHAKRA[r.num].color}66;flex-shrink:0;"></span> ${(CHAKRA[r.num].what||'').split('。')[0]}。</div>
+            <div class="chakra-what">${(CHAKRA[r.num].what||'').split('。').slice(1).join('。')}</div>
             ${r.field==='bhagyank' ? `
             <div class="daily-bridge">${PLANET[r.num]}（数字${r.num}）の惑星実践でこのチャクラを整える</div>
             <div class="daily-note">以下の色・石・食材を日常に取り入れ、吉日（${PLANET_DAILY[r.num].day}）を意識することで${PLANET[r.num]}のエネルギーが高まり、第${CHAKRA[r.num].chakraNum}チャクラが活性化されます。</div>
