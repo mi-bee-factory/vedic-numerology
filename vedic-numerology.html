@@ -207,7 +207,7 @@ body{
 /* ─── CALC TABLE ─── */
 .calc-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:10px;}
 .calc-table td{padding:9px 12px;border-bottom:1px solid #f0ecfa;color:#1e1b2e;}
-.calc-table td:first-child{color:var(--muted);width:auto;font-size:0.72rem;white-space:nowrap;}
+.calc-table td:first-child{color:#1e1b2e;width:auto;font-size:0.80rem;white-space:nowrap;font-weight:600;}
 .calc-table td:last-child{color:var(--text);font-weight:700;text-align:right;}
 
 /* ─── NUM MEANING CARD ─── */
@@ -569,7 +569,7 @@ body{
 .overall-msg p{font-size:0.84rem;color:#2e2b4a;line-height:2.0;}
 
 /* ─── OM-CARD (鑑定の核心カード) ─── */
-.om-card{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;
+.om-card{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:14px;
   border-left:3px solid rgba(124,58,237,0.25);
   box-shadow:0 1px 6px rgba(124,58,237,0.06);}
 .om-card-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.10em;
@@ -1205,18 +1205,15 @@ function calculate() {
       ? `<div class="om-card" style="border-left:3px solid #7c3aed;">
           <div class="om-card-label">今世の最重要テーマ</div>
           <div class="om-card-value"><span class="hl">自分の軸・中心点を育てること</span></div>
-          <div class="om-card-sub">グリッドの中心「5」が欠けています。周囲に流されず、自分自身の価値観と判断軸を築いていくことが魂の最大の修行です。</div>
+          <div class="om-card-sub" style="font-size:0.78rem;">詳細はセクション⑤のロー・シュー・グリッドで確認できます。</div>
         </div>`
       : `<div class="om-card" style="border-left:3px solid #7c3aed;">
           <div class="om-card-label">今世で育てるテーマ</div>
           <div class="om-card-value"><span class="hl2">意識的に育てることで開花する伸びしろ</span></div>
-          <div class="om-card-sub">欠けた数字（${missing.join('・')}）は弱点ではなく、今世で取り組むことで誰より深く体得できるエネルギーです。</div>
+          <div class="om-card-sub" style="font-size:0.78rem;">詳細はセクション⑤のロー・シュー・グリッドで確認できます。</div>
         </div>`;
   document.getElementById('r-overall').innerHTML=`
-    <div class="om-card" style="background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(219,39,119,0.04));border:none;margin-bottom:4px;">
-      <div class="om-card-label">この鑑定について</div>
-      <div class="om-card-value" style="font-size:0.92rem;font-weight:400;line-height:2.0;color:#2e2b4a;">生年月日から導き出した数字が、あなたの持って生まれたエネルギーと、魂が向かっていく方向を示しています。<br>数字は運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>です。</div>
-    </div>
+    <p style="font-size:0.82rem;color:#504e68;line-height:1.9;margin-bottom:14px;">生年月日から導き出した数字が、あなたの持って生まれたエネルギーと、魂が向かっていく方向を示しています。数字は運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>です。</p>
     <div class="om-card" style="border-left:3px solid ${COLORS[mul]};">
       <div class="om-card-label">あなたが生まれ持ったエネルギー（誕生日から）</div>
       <div class="om-card-value" style="color:${COLORS[mul]};">${mulKw}</div>
@@ -1233,7 +1230,12 @@ function calculate() {
       <div class="om-card-value" style="color:${COLORS[py]};">「${PERIOD_READING[py]?.theme||''}」</div>
       <div class="om-card-sub">${PERIOD_READING[py]?.body||''}</div>
     </div>
-    <p style="font-size:0.80rem;color:#504e68;margin-top:6px;line-height:1.9;text-align:center;">↓ 以下に詳しい読み解きと実践アドバイスが続きます</p>
+    <div style="text-align:center;margin-top:6px;">
+      <a href="#r-num-meanings" onclick="event.preventDefault();document.getElementById('r-num-meanings').scrollIntoView({behavior:'smooth',block:'start'});"
+         style="font-size:0.82rem;color:#7c3aed;text-decoration:none;font-weight:600;padding:8px 18px;border:1.5px solid rgba(124,58,237,0.3);border-radius:20px;display:inline-block;">
+        ↓ 詳しい読み解きと実践アドバイスへ
+      </a>
+    </div>
   `;
 
   // ② 基本数字カード
@@ -1308,12 +1310,13 @@ function calculate() {
             <div class="myth-nature">${MYTH[r.num]?.nature||''}</div>
           </div>
           <div class="chakra-box">
+            ${r.field==='mulank' ? `<div style="font-size:0.76rem;color:#504e68;line-height:1.8;margin-bottom:10px;padding:8px 12px;background:rgba(124,58,237,0.04);border-radius:8px;">💡 <strong>チャクラとは？</strong> 体内に存在する7つのエネルギーセンターのこと。それぞれが特定の感情・機能・人生領域を司るとされ、整えることで対応するエネルギーが活性化されます。</div>` : ''}
             <div class="chakra-reason">${
               r.field==='mulank'
-                ? `あなたの<strong>ムーランクは ${r.num}（${PLANET[r.num]}）</strong>。${PLANET[r.num]}の惑星実践を続けることで<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>が整い、あなたが本来持つムーランクのエネルギーが自然に発揮されるようになります。`
+                ? `<strong>${PLANET[r.num]}${PLANET_SK[r.num]!==PLANET[r.num]?'（'+PLANET_SK[r.num]+'）':''}</strong>の惑星実践を続けることで<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>が整い、あなたが本来持つムーランクのエネルギーが自然に発揮されるようになります。`
               : r.field==='bhagyank'
-                ? `あなたの<strong>バーグヤンクは ${r.num}（${PLANET[r.num]}）</strong>。この数字は魂の使命の方向性を示します。ムーランクの実践を積み重ねることで、自然とこの方向へ向かう流れが生まれます。`
-              : `あなたの<strong>年の数字は ${r.num}（${PLANET[r.num]}）</strong>。生まれた時代から受け取ったこのエネルギーは補助的な背景として働きます。`
+                ? `<span style="font-size:0.78rem;color:#7c3aed;font-weight:700;">${PLANET_SK[r.num]}（${PLANET[r.num]}）のチャクラ</span>`
+              : `<span style="font-size:0.78rem;color:#7c3aed;font-weight:700;">${PLANET_SK[r.num]}（${PLANET[r.num]}）のチャクラ</span>`
             }</div>
             <div class="chakra-name"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${CHAKRA[r.num].color};box-shadow:0 0 6px ${CHAKRA[r.num].color}66;flex-shrink:0;"></span> 第${CHAKRA[r.num].chakraNum}チャクラ：${CHAKRA[r.num].name}（${CHAKRA[r.num].en}）</div>
             <div class="chakra-what">${CHAKRA[r.num].what}</div>
