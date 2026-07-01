@@ -376,6 +376,7 @@ body{
   border-radius:10px;padding:14px;
   font-size:0.75rem;color:#991b1b;line-height:1.8;
 }
+.karma-box .kb-good .marker{color:#991b1b;}
 
 /* ─── ADVICE ─── */
 .advice-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
@@ -418,9 +419,28 @@ body{
 .overall-msg .hl {color:#7c3aed;font-weight:700;}
 .overall-msg .hl2{
   color:#1e1b2e;font-weight:700;
-  background:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  background-image:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  background-repeat:no-repeat;
+  background-size:0% 100%;
+  transition:background-size 0.9s cubic-bezier(0.65,0,0.35,1);
   display:inline;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
 }
+.overall-msg .hl2.marker-in{background-size:100% 100%;}
+
+/* ─── 汎用マーカーアンダーライン（スクロールで描画） ─── */
+.marker{
+  color:#1e1b2e;font-weight:700;
+  background-image:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  background-repeat:no-repeat;
+  background-size:0% 100%;
+  transition:background-size 0.9s cubic-bezier(0.65,0,0.35,1);
+  display:inline;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+}
+.marker.marker-in{background-size:100% 100%;}
 .overall-msg .hl3{color:#db2777;font-weight:700;}
 
 /* ─── RESET BTN ─── */
@@ -516,12 +536,16 @@ body{
 .dash-hints{font-size:0.84rem;line-height:2.2;}
 .dash-good{
   color:#1e1b2e;font-weight:700;
-  background:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  background-image:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  background-repeat:no-repeat;
+  background-size:0% 100%;
+  transition:background-size 0.9s cubic-bezier(0.65,0,0.35,1);
   -webkit-box-decoration-break:clone;
   box-decoration-break:clone;
   display:inline;
   margin-right:14px;
 }
+.dash-good.marker-in{background-size:100% 100%;}
 .dash-care{color:#92400e;display:inline;}
 
 /* ─── YEAR CYCLE TABLE additional ─── */
@@ -831,11 +855,11 @@ const PLANET_SK = {1:'スーリヤ',2:'チャンドラ',3:'グル',4:'ラーフ'
 const PLANET_DAILY = {
   1:{color:'赤・オレンジ・ゴールド',gem:'ルビー（代替：ガーネット）',day:'日曜日',
      mantra:'Om Suryaya Namaha（オーム・スーリヤーヤ・ナマハ）',
-     food:'小麦・小豆・生姜・サフラン・トマトやパプリカなど赤い野菜',
+     food:'小麦・黒糖（ジャガリー）・生姜・サフラン・トマトやパプリカなど赤い野菜',
      act:'朝の太陽礼拝（スーリヤ・ナマスカール）、日光を15〜30分浴びる、人前に立つ・リードする機会を持つ'},
   2:{color:'白・シルバー・クリーム',gem:'パール（真珠）・ムーンストーン',day:'月曜日',
      mantra:'Om Chandraya Namaha（オーム・チャンドラーヤ・ナマハ）',
-     food:'白米・牛乳・ヨーグルト・豆腐・大根やかぶなど白い野菜',
+     food:'白米・牛乳・ヨーグルト・ミスリ（氷砂糖）・大根やかぶなど白い野菜',
      act:'月光浴（特に満月）、感情日記、水辺で過ごす、瞑想・深呼吸'},
   3:{color:'黄色・ゴールド',gem:'イエローサファイア（代替：トパーズ）',day:'木曜日',
      mantra:'Om Guruve Namaha（オーム・グラヴェー・ナマハ）',
@@ -847,15 +871,15 @@ const PLANET_DAILY = {
      act:'執着を手放す練習、変化を受け入れる、瞑想で内なる幻想と向き合う'},
   5:{color:'緑・エメラルドグリーン',gem:'エメラルド（代替：ペリドット）',day:'水曜日',
      mantra:'Om Budhaya Namaha（オーム・ブダーヤ・ナマハ）',
-     food:'ほうれん草や小松菜など緑の葉野菜・アーモンド・ミント',
+     food:'ムング豆（緑豆）・ほうれん草や小松菜など緑の葉野菜・ミント',
      act:'読む・書く・対話する、知識をシェアする、新しいスキルを学ぶ'},
   6:{color:'白・虹色・ライトピンク',gem:'ダイヤモンド（代替：ホワイトサファイア・クリスタル）',day:'金曜日',
      mantra:'Om Shukraya Namaha（オーム・シュクラーヤ・ナマハ）',
-     food:'牛乳やヨーグルトなど乳製品・はちみつや黒糖など甘いもの・ローズティー・豆腐や白ごまなど白い食材',
+     food:'牛乳やヨーグルトなど乳製品・はちみつや黒糖など甘いもの・ローズティー・白米や白ごまなど白い食材',
      act:'芸術・音楽・創作活動、美しいものを鑑賞する、愛する人と時間を過ごす'},
   7:{color:'グレー・多色・光る色',gem:'キャッツアイ（クリソベリル）',day:'火曜日（ケートゥ関連）',
      mantra:'Om Ketave Namaha（オーム・ケートヴェー・ナマハ）',
-     food:'ごま・大根・ごぼうなど根菜・ターメリック',
+     food:'ごま・斑点のあるムング豆・ココナッツ・ターメリック',
      act:'瞑想・沈黙の時間、スピリチュアルな探求、執着を手放す、孤独に過ごす時間を大切に'},
   8:{color:'黒・濃い青・ダークパープル',gem:'ブルーサファイア（代替：アメシスト・ラピスラズリ）',day:'土曜日',
      mantra:'Om Shanaishcharaya Namaha（オーム・シャナイシュチャラーヤ・ナマハ）',
@@ -1154,6 +1178,25 @@ function updateSecNums(hasName) {
 }
 
 // ─────────────────────────────────────
+// マーカーアンダーライン：スクロールで表示された瞬間に線を描画
+// ─────────────────────────────────────
+let markerObserver = null;
+function setupMarkerAnimation() {
+  if (!markerObserver) {
+    markerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('marker-in');
+          markerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+  }
+  document.querySelectorAll('.hl2:not(.marker-in), .dash-good:not(.marker-in), .marker:not(.marker-in)')
+    .forEach(el => markerObserver.observe(el));
+}
+
+// ─────────────────────────────────────
 // UI
 // ─────────────────────────────────────
 function initSelects() {
@@ -1228,12 +1271,12 @@ function calculate() {
       ? `<div class="om-card" style="border-left:3px solid #7c3aed;">
           <div class="om-card-label">今世の最重要テーマ</div>
           <div class="om-card-value"><span class="hl">自分の軸・中心点を育てること</span></div>
-          <div class="om-card-sub">ロー・シュー・グリッドの中心にあたる数字「5」が、あなたの生年月日には含まれていません。中心が空いているぶん、周囲の意見に流されやすくなりますが、そのぶん自分自身の価値観や判断基準を意識して育てることが、今世でもっとも取り組みたいテーマです。</div>
+          <div class="om-card-sub">ロー・シュー・グリッドの中心にあたる数字「5」が、あなたの生年月日には含まれていません。中心が空いているぶん、周囲の意見に流されやすくなりますが、そのぶん<span class="marker">自分自身の価値観や判断基準を意識して育てること</span>が、今世でもっとも取り組みたいテーマです。</div>
         </div>`
       : `<div class="om-card" style="border-left:3px solid #7c3aed;">
           <div class="om-card-label">今世で育てるテーマ</div>
           <div class="om-card-value"><span class="hl2">意識的に育てることで開花する伸びしろ</span></div>
-          <div class="om-card-sub">生年月日の中に数字「${missing.join('・')}」が含まれていません。これは弱点ではなく、まだ意識的に使われていないぶん、これから育てることで人一倍深く体得できるエネルギーです。</div>
+          <div class="om-card-sub">生年月日の中に数字「${missing.join('・')}」が含まれていません。これは弱点ではなく、まだ意識的に使われていないぶん、<span class="marker">これから育てることで人一倍深く体得できるエネルギー</span>です。</div>
         </div>`;
   document.getElementById('r-overall').innerHTML=`
     <p style="font-size:0.82rem;color:#504e68;line-height:1.9;margin-bottom:14px;">生年月日から導き出した数字が、あなたの持って生まれたエネルギーと、魂が向かっていく方向を示しています。数字は運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>です。</p>
@@ -1371,7 +1414,7 @@ function calculate() {
         <p><strong>輪廻転生の記憶：</strong>${kd.meaning}</p>
         <p><strong>どんな場面が試練のサイン？</strong><br>${kd.signs}</p>
         <p><strong>カルマを浄化するには？</strong><br>${kd.howto}</p>
-        <div class="kb-good"><strong>カルマを乗り越えた先に待つもの：</strong><br>${kd.good}</div>
+        <div class="kb-good"><strong>カルマを乗り越えた先に待つもの：</strong><br><span class="marker">${kd.good}</span></div>
       </div>
     </div>`;
   // ⑤ グリッド
@@ -1600,6 +1643,7 @@ function calculate() {
       setTimeout(()=>el.classList.add('shown'),i*120);
     });
   },100);
+  setupMarkerAnimation();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
