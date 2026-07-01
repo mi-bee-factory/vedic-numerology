@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vedic Numerology — 魂の地図</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      transparent;
+  --bg2:     rgba(255,255,255,0.88);
+  --bg3:     rgba(232,238,248,0.7);
+  --border:  rgba(80,100,160,0.12);
+  --text:    #1e1b2e;
+  --muted:   #504e68;
+  --shadow:  0 2px 16px rgba(40,60,120,0.09);
+  --shadow2: 0 4px 28px rgba(40,60,120,0.14);
+
+  /* 惑星カラー（ヴェーダ正統：宝石の色に準拠） */
+  --c1: #c0392b; --c1l: #fff1f0; --c1b: rgba(192,57,43,0.12);   /* 太陽：ルビー赤 */
+  --c2: #64748b; --c2l: #f8fafc; --c2b: rgba(100,116,139,0.10); /* 月：パール白銀 */
+  --c3: #b7791f; --c3l: #fefce8; --c3b: rgba(183,121,31,0.12);  /* 木星：イエローサファイア金 */
+  --c4: #57534e; --c4l: #fafaf9; --c4b: rgba(87,83,78,0.12);    /* ラーフ：ヘソナイト暗褐色 */
+  --c5: #15803d; --c5l: #f0fdf4; --c5b: rgba(21,128,61,0.12);   /* 水星：エメラルド緑 */
+  --c6: #6d28d9; --c6l: #faf5ff; --c6b: rgba(109,40,217,0.10);  /* 金星：ダイヤ虹→薄紫表現 */
+  --c7: #6b7280; --c7l: #f9fafb; --c7b: rgba(107,114,128,0.10); /* ケートゥ：キャッツアイグレー */
+  --c8: #1e40af; --c8l: #eff6ff; --c8b: rgba(30,64,175,0.12);   /* 土星：ブルーサファイア濃紺 */
+  --c9: #be123c; --c9l: #fff1f2; --c9b: rgba(190,18,60,0.12);   /* 火星：レッドコーラル珊瑚 */
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:17px;}
+body{
+  font-family:'Noto Serif JP','游明朝','Yu Mincho',serif;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 60%, #eaf2fb 78%, #d8eaf8 90%, #c8e0f5 100%);
+  background-attachment: fixed;
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.85;
+}
+
+
+/* ─── HEADER ─── */
+.app-header{
+  padding:0;
+  text-align:center;
+  background:transparent;
+  border-bottom:1px solid rgba(80,100,160,0.1);
+}
+.header-bg-img{
+  width:100%;
+  max-width:100%;
+  height:auto;
+  display:block;
+  -webkit-mask-image:
+    linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%),
+    linear-gradient(to bottom,black 0%,black 85%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%),
+    linear-gradient(to bottom,black 0%,black 85%,transparent 100%);
+  mask-composite:intersect;
+}
+
+/* ─── FORM ─── */
+.form-section{max-width:600px;margin:0 auto;padding:40px 20px;}
+.form-card{
+  background:var(--bg2);
+  border-radius:24px;
+  padding:32px;
+  box-shadow:0 4px 24px rgba(40,60,120,0.11),0 1px 6px rgba(40,60,120,0.06);
+}
+.form-card h2{
+  font-size:0.72rem;text-transform:uppercase;
+  letter-spacing:0.14em;color:var(--muted);margin-bottom:24px;
+  font-weight:500;
+}
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:0.78rem;color:#444;margin-bottom:8px;font-weight:500;}
+.field .hint{font-size:0.68rem;color:var(--muted);margin-top:5px;}
+.field input,.field select{
+  width:100%;
+  background:#fafafa;
+  border:1.5px solid #e5e0f0;
+  border-radius:12px;
+  padding:13px 16px;
+  color:var(--text);
+  font-size:0.95rem;
+  font-family:inherit;
+  outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.field input:focus,.field select:focus{
+  border-color:#7c3aed;
+  box-shadow:0 0 0 3px rgba(124,58,237,0.1);
+}
+.date-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.btn-calc{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,#5b21b6,#7c3aed,#a855f7);
+  border:none;border-radius:14px;
+  color:#fff;font-size:1rem;font-weight:700;
+  font-family:inherit;cursor:pointer;
+  letter-spacing:0.06em;
+  transition:opacity 0.2s,transform 0.1s;
+  margin-top:8px;
+  box-shadow:0 4px 16px rgba(124,58,237,0.35);
+}
+.btn-calc:hover{opacity:0.92;}
+.btn-calc:active{transform:scale(0.98);}
+
+/* ─── RESULTS ─── */
+#results{max-width:840px;margin:0 auto;padding:0 20px 60px;display:none;}
+#results.visible{display:block;}
+
+.result-name-bar{
+  text-align:center;padding:40px 0 36px;
+}
+.result-name-bar .rn-kana{
+  font-size:2rem;font-weight:400;color:var(--text);
+  font-family:'Noto Serif JP',serif;
+  letter-spacing:0.12em;
+  margin-bottom:6px;
+}
+.result-name-bar .rn-date{font-size:0.85rem;color:var(--muted);}
+.result-name-bar .rn-divider{
+  width:80px;height:3px;
+  background:linear-gradient(90deg,#7c3aed,#db2777);
+  border-radius:2px;margin:16px auto 0;
+}
+
+/* section label */
+.sec{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:20px;
+}
+.sec-num{
+  width:28px;height:28px;
+  background:var(--text);
+  color:#fff;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;font-weight:700;
+  flex-shrink:0;
+}
+.sec-label{
+  font-size:0.78rem;text-transform:uppercase;
+  letter-spacing:0.12em;color:#1e1b2e;font-weight:700;
+}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);}
+.result-block{margin-bottom:48px;}
+
+/* explain box */
+.explain-box{
+  background:#fff;
+  border-radius:16px;
+  padding:18px 22px;
+  margin-bottom:18px;
+  box-shadow:0 4px 20px rgba(40,60,120,0.08),0 1px 4px rgba(40,60,120,0.04);
+}
+.explain-box .ex-title{
+  font-size:0.75rem;font-weight:700;
+  color:#5b21b6;margin-bottom:8px;
+  display:flex;align-items:center;gap:8px;
+  text-transform:uppercase;letter-spacing:0.08em;
+}
+.explain-box .ex-title::before{
+  content:'';width:4px;height:14px;
+  background:linear-gradient(180deg,#7c3aed,#db2777);
+  border-radius:2px;flex-shrink:0;
+}
+.explain-box p,.explain-box div{font-size:0.88rem;color:#1e1b2e;line-height:2.0;}
+.explain-box strong{color:var(--text);}
+
+/* ─── BASIC NUMBER CARDS ─── */
+.key-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;margin-bottom:18px;
+}
+.kc{
+  background:#fff;
+  border-radius:20px;
+  padding:22px 16px 18px;
+  text-align:center;
+  box-shadow:0 6px 28px rgba(40,60,120,0.10),0 2px 6px rgba(40,60,120,0.06);
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.kc:hover{transform:translateY(-2px);box-shadow:var(--shadow2);}
+.kc::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:4px;
+  border-radius:0 0 20px 20px;
+}
+.kc-mul::after{background:linear-gradient(90deg,#5b21b6,#7c3aed);}
+.kc-bha::after{background:linear-gradient(90deg,#9d174d,#db2777);}
+.kc-yr::after {background:linear-gradient(90deg,#1e40af,#3b82f6);}
+.kc-karma::after{background:linear-gradient(90deg,#991b1b,#dc2626);}
+.kc-planet-img{width:52px;height:52px;margin:0 auto 10px;}
+.kc .kc-big{font-size:2.2rem;font-weight:700;line-height:1;margin-bottom:6px;}
+.kc .kc-name{font-size:0.75rem;color:#504e68;margin-bottom:5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
+.kc .kc-planet-name{font-size:0.88rem;font-weight:700;margin-bottom:6px;}
+.kc .kc-role{font-size:0.76rem;color:#3a3650;line-height:1.75;padding-top:8px;margin-top:6px;border-top:1px solid rgba(0,0,0,0.06);}
+
+/* ─── CALC TABLE ─── */
+.calc-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:10px;}
+.calc-table td{padding:9px 12px;border-bottom:1px solid #f0ecfa;color:#1e1b2e;}
+.calc-table td:first-child{color:var(--muted);width:auto;font-size:0.72rem;white-space:nowrap;}
+.calc-table td:last-child{color:var(--text);font-weight:700;text-align:right;}
+
+/* ─── NUM MEANING CARD ─── */
+.num-meaning{
+  background:#fff;
+  border-radius:18px;
+  padding:24px;
+  margin-top:16px;
+  box-shadow:0 6px 28px rgba(40,60,120,0.10),0 2px 6px rgba(40,60,120,0.05);
+}
+.nm-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:16px;}
+.nm-planet-art{width:64px;height:64px;flex-shrink:0;}
+.nm-info .nm-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;}
+.nm-info .nm-title{font-size:1.2rem;font-weight:700;margin:2px 0;}
+.nm-info .nm-role{font-size:0.78rem;color:#3a3650;}
+.nm-body{font-size:0.88rem;color:#1e1b2e;line-height:2.0;}
+.nm-body p{margin-bottom:10px;}
+.nm-body .nm-section{
+  font-size:0.70rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.1em;color:var(--muted);margin:12px 0 5px;
+}
+.tag{
+  display:inline-block;padding:3px 12px;border-radius:20px;
+  font-size:0.62rem;font-weight:600;margin:2px 3px 0 0;
+}
+
+/* ─── PERIOD CARDS ─── */
+.period-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.pc{
+  background:#fff;
+  border-radius:18px;padding:18px 12px;text-align:center;
+  box-shadow:0 4px 20px rgba(40,60,120,0.09),0 1px 4px rgba(40,60,120,0.05);
+}
+.pc .pc-art{width:44px;height:44px;margin:0 auto 8px;}
+.pc .pc-name{font-size:0.70rem;color:var(--muted);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;}
+.pc .pc-big{font-size:1.9rem;font-weight:700;line-height:1;margin-bottom:2px;}
+.pc .pc-planet{font-size:0.68rem;font-weight:600;color:var(--muted);}
+
+/* ─── GRID ─── */
+.grid-wrap{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;}
+.lo-shu{
+  display:grid;
+  grid-template-columns:repeat(3,88px);
+  grid-template-rows:repeat(3,88px);
+  gap:6px;flex-shrink:0;
+}
+.gc{
+  border-radius:14px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  border:1.5px solid;position:relative;gap:3px;
+  cursor:default;transition:transform 0.15s,box-shadow 0.15s;
+  background:#fff;
+}
+.gc:hover{transform:scale(1.04);box-shadow:var(--shadow2);}
+.gc .gc-pos{position:absolute;top:5px;left:7px;font-size:0.62rem;opacity:0.45;font-weight:700;}
+.gc .gc-num{font-size:1.4rem;font-weight:900;line-height:1;}
+.gc .gc-dots{display:flex;gap:3px;}
+.gc .gc-dots span{width:5px;height:5px;border-radius:50%;display:block;}
+.gc .gc-lbl{font-size:0.58rem;opacity:0.75;text-align:center;padding:0 4px;font-weight:600;}
+
+.gc-f1{background:var(--c1l);border-color:rgba(217,119,6,0.3);}  .gc-f1 .gc-num{color:var(--c1);}  .gc-f1 .gc-dots span{background:var(--c1);}
+.gc-f2{background:var(--c2l);border-color:rgba(79,70,229,0.25);} .gc-f2 .gc-num{color:var(--c2);} .gc-f2 .gc-dots span{background:var(--c2);}
+.gc-f3{background:var(--c3l);border-color:rgba(5,150,105,0.25);} .gc-f3 .gc-num{color:var(--c3);} .gc-f3 .gc-dots span{background:var(--c3);}
+.gc-f4{background:var(--c4l);border-color:rgba(124,58,237,0.25);}.gc-f4 .gc-num{color:var(--c4);} .gc-f4 .gc-dots span{background:var(--c4);}
+.gc-f5{background:var(--c5l);border-color:rgba(8,145,178,0.25);} .gc-f5 .gc-num{color:var(--c5);} .gc-f5 .gc-dots span{background:var(--c5);}
+.gc-f6{background:var(--c6l);border-color:rgba(219,39,119,0.25);}.gc-f6 .gc-num{color:var(--c6);} .gc-f6 .gc-dots span{background:var(--c6);}
+.gc-f7{background:var(--c7l);border-color:rgba(71,85,105,0.25);} .gc-f7 .gc-num{color:var(--c7);} .gc-f7 .gc-dots span{background:var(--c7);}
+.gc-f8{background:var(--c8l);border-color:rgba(29,78,216,0.25);} .gc-f8 .gc-num{color:var(--c8);} .gc-f8 .gc-dots span{background:var(--c8);}
+.gc-f9{background:var(--c9l);border-color:rgba(220,38,38,0.25);} .gc-f9 .gc-num{color:var(--c9);} .gc-f9 .gc-dots span{background:var(--c9);}
+.gc-empty{background:#fafafa;border-style:dashed;border-color:#e0d8f0;}
+.gc-empty .gc-num{color:#d8d0e8;font-size:0.9rem;}
+.gc-empty .gc-lbl{color:#c0b8d8;}
+.gc .gc-chakra{position:absolute;top:5px;right:7px;font-size:0.65rem;opacity:0.65;}
+
+/* ─── GRID ANNOTATED ─── */
+.grid-annotated{display:inline-flex;flex-direction:column;gap:4px;}
+.grid-col-labels{display:grid;grid-template-columns:repeat(3,88px);gap:4px;margin-left:50px;}
+.grid-col-labels span{font-size:0.65rem;color:#3a3650;text-align:center;font-weight:700;letter-spacing:0.02em;}
+.grid-rows-wrap{display:flex;gap:6px;align-items:center;}
+.grid-row-labels{display:flex;flex-direction:column;justify-content:space-around;height:calc(88px * 3 + 4px * 2);width:52px;}
+.grid-row-labels span{font-size:0.65rem;color:#3a3650;text-align:right;line-height:1.3;font-weight:700;letter-spacing:0.02em;}
+
+/* ─── CHAKRA BOX ─── */
+.chakra-box{margin-top:12px;padding:12px 14px;background:rgba(124,58,237,0.04);border-radius:10px;border:1px solid rgba(124,58,237,0.10);}
+.chakra-reason{
+  font-size:0.85rem;color:#1e1b2e;line-height:1.9;
+  margin-bottom:10px;padding:10px 12px;
+  background:rgba(124,58,237,0.08);border-radius:8px;
+  border-left:3px solid #7c3aed;
+}
+.chakra-reason strong{color:#5b21b6;}
+.chakra-name{font-size:0.73rem;font-weight:700;color:#5b21b6;margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.chakra-what{font-size:0.76rem;color:#1e1b2e;line-height:1.8;margin-bottom:7px;}
+.chakra-tips{font-size:0.70rem;color:#4a4560;line-height:1.7;padding:7px 10px;background:rgba(124,58,237,0.06);border-radius:7px;border-left:3px solid #7c3aed;}
+.daily-bridge{
+  font-size:0.82rem;font-weight:700;color:#5b21b6;
+  margin:10px 0 4px;padding:6px 10px;
+  background:rgba(91,33,182,0.07);border-radius:7px;
+  border-left:3px solid #7c3aed;
+}
+.daily-note{font-size:0.80rem;color:#2e2b4a;line-height:1.85;margin-bottom:10px;}
+.daily-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px;}
+.daily-item{font-size:0.82rem;color:#1e1b2e;padding:9px 12px;background:rgba(0,0,0,0.03);border-radius:7px;line-height:1.75;}
+.daily-item strong{
+  color:#1e1b2e;
+  font-weight:700;
+  background:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  display:inline;
+}
+.daily-item.full{grid-column:1/-1;}
+
+.missing-list{flex:1;min-width:220px;}
+.missing-list h3{font-size:0.88rem;color:#991b1b;margin-bottom:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;}
+.m-item{display:flex;gap:10px;margin-bottom:14px;align-items:flex-start;}
+.m-num{
+  width:44px;height:52px;
+  background:#fef2f2;border:1.5px dashed #fca5a5;
+  border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;
+  font-weight:900;color:#dc2626;font-size:0.9rem;flex-shrink:0;
+}
+.m-text{font-size:0.82rem;color:#1e1b2e;line-height:1.75;}
+.m-text strong{color:var(--text);display:block;font-size:0.88rem;font-weight:700;margin-bottom:3px;}
+
+/* ─── NAME CARD ─── */
+.name-card{
+  background:#fff;
+  border-radius:16px;padding:22px;margin-bottom:14px;
+  box-shadow:0 4px 20px rgba(40,60,120,0.09),0 1px 4px rgba(40,60,120,0.05);
+}
+.nc-title{font-size:0.70rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:12px;font-weight:600;}
+.nc-kana{font-size:1.1rem;font-weight:700;margin-bottom:4px;}
+.nc-roma{font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:14px;}
+.letter-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;}
+.lb{border-radius:8px;padding:6px 4px;text-align:center;min-width:34px;background:#f5f0fb;}
+.lb .lc{font-size:0.85rem;font-weight:700;color:var(--text);}
+.lb .ln{font-size:0.65rem;color:#7c3aed;font-weight:600;}
+.nc-sum{font-size:0.78rem;color:#4a4560;margin-bottom:10px;}
+.nc-result{
+  border-radius:12px;padding:14px 16px;
+  display:flex;align-items:center;gap:14px;
+  box-shadow:0 2px 12px rgba(40,60,120,0.08);
+}
+.nc-result .nr-num{font-size:1.8rem;font-weight:700;line-height:1;}
+.nc-result .nr-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+.nc-result .nr-title{font-size:0.85rem;font-weight:700;}
+.nc-result .nr-desc{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+
+/* ─── KARMA BOX ─── */
+.karma-box{
+  background:#fff;
+  border-left:4px solid #dc2626;
+  border-radius:18px;padding:24px;
+  box-shadow:0 4px 20px rgba(220,38,38,0.08),0 1px 4px rgba(40,60,120,0.05);
+}
+.karma-box .kb-title{
+  font-size:0.85rem;font-weight:700;color:#991b1b;
+  margin-bottom:14px;padding-bottom:12px;
+  border-bottom:1px solid rgba(220,38,38,0.1);
+  display:flex;align-items:center;gap:12px;
+}
+.karma-box .kb-body{font-size:0.88rem;color:#1e1b2e;line-height:2.0;}
+.karma-box .kb-body p{margin-bottom:10px;}
+.karma-box .kb-body strong{color:var(--text);}
+.karma-box .kb-good{
+  margin-top:14px;background:#fef2f2;
+  border-radius:10px;padding:14px;
+  font-size:0.75rem;color:#991b1b;line-height:1.8;
+}
+
+/* ─── ADVICE ─── */
+.advice-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.advice-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 20px rgba(40,60,120,0.08),0 1px 4px rgba(40,60,120,0.04);}
+.advice-good  {border-left:4px solid rgba(5,150,105,0.6);}
+.advice-care  {border-left:4px solid rgba(217,119,6,0.6);}
+.advice-action{border-left:4px solid rgba(79,70,229,0.6);}
+.advice-period{border-left:4px solid rgba(124,58,237,0.6);}
+.advice-label{
+  font-size:0.82rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.08em;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.advice-good   .advice-label{color:#065f46;}
+.advice-care   .advice-label{color:#92400e;}
+.advice-action .advice-label{color:#1e3a8a;}
+.advice-period .advice-label{color:#4c1d95;}
+.advice-label::before{
+  content:'';width:8px;height:8px;border-radius:50%;flex-shrink:0;
+}
+.advice-good   .advice-label::before{background:#059669;}
+.advice-care   .advice-label::before{background:#d97706;}
+.advice-action .advice-label::before{background:#3b82f6;}
+.advice-period .advice-label::before{background:#7c3aed;}
+.advice-body{font-size:0.92rem;color:#1e1b2e;line-height:2.0;}
+.advice-body li{margin-left:16px;margin-bottom:4px;}
+
+/* ─── OVERALL ─── */
+.overall-msg{
+  background:linear-gradient(135deg,#f5f0ff,#fdf2f8,#fffbeb);
+  border-radius:22px;padding:32px;text-align:center;
+  box-shadow:0 8px 36px rgba(124,58,237,0.12),0 2px 8px rgba(40,60,120,0.06);
+}
+.overall-msg .om-label{
+  font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;
+  color:#7c3aed;margin-bottom:18px;font-weight:700;
+}
+.overall-msg p{font-size:0.88rem;color:#2e2b4a;line-height:2.1;}
+.overall-msg strong{color:var(--text);}
+.overall-msg .hl {color:#7c3aed;font-weight:700;}
+.overall-msg .hl2{
+  color:#1e1b2e;font-weight:700;
+  background:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  display:inline;
+}
+.overall-msg .hl3{color:#db2777;font-weight:700;}
+
+/* ─── RESET BTN ─── */
+.btn-reset{
+  display:block;margin:0 auto;
+  background:#fff;border:none;
+  color:var(--muted);font-size:0.78rem;font-family:inherit;
+  padding:12px 28px;border-radius:24px;cursor:pointer;
+  transition:color 0.2s,box-shadow 0.2s;
+  box-shadow:0 2px 14px rgba(40,60,120,0.09);
+}
+.btn-reset:hover{color:#7c3aed;box-shadow:0 4px 16px rgba(124,58,237,0.18);}
+
+/* ─── NUMBER GALLERY ─── */
+.num-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px;}
+@media(min-width:600px){.num-gallery{grid-template-columns:repeat(5,1fr);}}
+.ng-card{
+  border-radius:14px;padding:18px 10px 16px;text-align:center;
+  box-shadow:0 3px 14px rgba(40,60,120,0.09);
+  transition:transform 0.15s;cursor:default;
+}
+.ng-card:hover{transform:translateY(-2px);}
+.ng-card .ng-num{font-size:1.8rem;font-weight:700;line-height:1;margin-bottom:4px;}
+.ng-card .ng-planet{font-size:0.82rem;font-weight:700;opacity:1;color:#1e1b2e;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;}
+.ng-card .ng-art{width:44px;height:44px;margin:0 auto 8px;}
+.ng-card .ng-images{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin-bottom:6px;}
+.ng-card .ng-img-tag{font-size:0.72rem;padding:3px 7px;border-radius:6px;font-weight:600;}
+.ng-card .ng-kw{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;}
+.ng-card .ng-kw span{font-size:0.70rem;opacity:1;font-weight:600;color:#1e1b2e;}
+
+/* ─── YEAR CYCLE TABLE ─── */
+.year-cycle-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:0.76rem;}
+.year-cycle-table th{
+  background:linear-gradient(135deg,#5b21b6,#7c3aed);
+  color:#fff;padding:10px 12px;text-align:left;
+  font-size:0.65rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+}
+.year-cycle-table th:first-child{border-radius:12px 0 0 0;}
+.year-cycle-table th:last-child{border-radius:0 12px 0 0;}
+.year-cycle-table td{padding:10px 12px;color:#3a3650;vertical-align:top;}
+.year-cycle-table tr:nth-child(even) td{background:rgba(124,58,237,0.03);}
+.year-cycle-table tr.current-year td{background:rgba(124,58,237,0.08);}
+.year-cycle-table tr:last-child td:first-child{border-radius:0 0 0 12px;}
+.year-cycle-table tr:last-child td:last-child{border-radius:0 0 12px 0;}
+.yct-num{font-weight:700;font-size:1.1rem;}
+.yct-now{
+  display:inline-block;background:#7c3aed;color:#fff;
+  font-size:0.55rem;font-weight:700;padding:2px 7px;border-radius:10px;
+  margin-left:6px;vertical-align:middle;letter-spacing:0.06em;
+}
+.yct-tag{
+  display:inline-block;font-size:0.6rem;font-weight:600;
+  padding:2px 8px;border-radius:10px;margin-top:3px;
+}
+.yct-tag-good{background:#059669;color:#fff;}
+.yct-tag-care{background:#fff7ed;color:#92400e;}
+.yct-tag-change{background:#eff6ff;color:#1e40af;}
+
+/* ─── MYTH BOX ─── */
+.myth-box{margin-top:14px;padding-top:14px;border-top:1px solid rgba(124,58,237,0.08);}
+.myth-name{font-size:0.75rem;font-weight:700;color:#5b21b6;margin-bottom:6px;letter-spacing:0.05em;}
+.myth-body{font-size:0.80rem;color:#3a3650;line-height:1.9;margin-bottom:8px;}
+.myth-nature{font-size:0.75rem;color:#4a4560;font-style:italic;padding:8px 12px;
+  background:rgba(124,58,237,0.04);border-radius:8px;line-height:1.75;}
+.kc-sanskrit{font-size:0.72rem;color:#504e68;font-weight:500;margin-top:-2px;margin-bottom:6px;letter-spacing:0.04em;}
+
+/* ─── GRID INSIGHT ─── */
+.grid-insight{margin-top:22px;display:flex;flex-direction:column;gap:12px;}
+.gi-section{background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 14px rgba(40,60,120,0.08);}
+.gi-label{font-size:0.63rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);font-weight:600;margin-bottom:10px;}
+.gi-nums{display:flex;flex-wrap:wrap;gap:8px;}
+.gi-num-chip{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;font-size:0.75rem;}
+.gi-num-chip .gn-num{font-size:1.1rem;font-weight:700;}
+.gi-num-chip .gn-text{font-size:0.72rem;color:#3a3650;line-height:1.55;}
+.gi-empty{font-size:0.78rem;color:var(--muted);line-height:1.7;}
+
+/* ─── DASHA NARRATION ─── */
+.dash-narration{margin-top:18px;}
+.dash-card{padding:16px 0;border-top:1px solid rgba(124,58,237,0.07);}
+.dash-card:first-child{border-top:none;}
+.dash-past{background:#f3f4f6;border-radius:10px;padding:12px 14px;margin:4px 0;}
+.dash-past .dash-year{color:#6b7280;}
+.dash-past .dash-py{color:#6b7280!important;}
+.dash-past .dash-theme{color:#6b7280;}
+.dash-past .dash-body{color:#6b7280;}
+.dash-now{background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(219,39,119,0.03));border-radius:14px;padding:18px;margin:8px 0;opacity:1!important;}
+.dash-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.dash-year{font-weight:700;font-size:1.0rem;min-width:52px;}
+.dash-now-badge{background:#7c3aed;color:#fff;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:8px;flex-shrink:0;}
+.dash-py{font-size:0.82rem;font-weight:600;color:#1e1b2e;}
+.dash-theme{font-size:0.88rem;color:#1e1b2e;font-weight:600;}
+.dash-body{font-size:0.92rem;color:#1e1b2e;line-height:2.0;margin-bottom:8px;}
+.dash-hints{display:flex;flex-wrap:wrap;gap:12px;font-size:0.84rem;}
+.dash-good{
+  color:#1e1b2e;font-weight:700;
+  background:linear-gradient(transparent 55%, rgba(196,181,253,0.45) 55%);
+  display:inline;
+}
+.dash-care{color:#92400e;}
+
+/* ─── YEAR CYCLE TABLE additional ─── */
+.year-cycle-table tr.past-year td{opacity:0.5;}
+.yct-tag-past{background:#f1f0f8;color:#6b6880;}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.55s,transform 0.55s;}
+.reveal.shown{opacity:1;transform:none;}
+
+/* ─── PASSWORD OVERLAY ─── */
+#pw-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#1a0533 0%,#0c1445 60%,#1a0533 100%);
+  display:none;align-items:center;justify-content:center;z-index:9999;}
+#pw-box{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.14);border-radius:28px;
+  padding:44px 40px;text-align:center;color:#fff;max-width:380px;width:90%;box-shadow:0 24px 80px rgba(0,0,0,0.4);}
+.pw-logo{font-size:1.1rem;letter-spacing:0.14em;margin-bottom:20px;color:#c4b5fd;font-family:'Cinzel',serif;}
+#pw-box>p{font-size:0.80rem;color:#d4c8f0;margin-bottom:22px;line-height:1.7;}
+#pw-input{display:block;width:100%;box-sizing:border-box;padding:13px 16px;border-radius:14px;
+  border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.10);
+  color:#fff;font-size:1.05rem;text-align:center;letter-spacing:0.2em;outline:none;margin-bottom:14px;}
+#pw-input::placeholder{color:rgba(255,255,255,0.35);letter-spacing:0.05em;}
+#pw-box button{width:100%;padding:13px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#6d28d9);
+  color:#fff;border:none;font-size:0.92rem;cursor:pointer;font-weight:700;letter-spacing:0.06em;
+  box-shadow:0 4px 18px rgba(124,58,237,0.35);}
+#pw-box button:hover{background:linear-gradient(135deg,#6d28d9,#5b21b6);}
+.pw-err{color:#fca5a5;font-size:0.74rem;margin-top:12px;margin-bottom:0;}
+
+/* ─── FOOTER ─── */
+.site-footer{text-align:center;padding:28px 0 20px;font-size:0.63rem;color:var(--muted);letter-spacing:0.10em;}
+
+/* ─── PDF BUTTON ─── */
+.btn-pdf{display:block;margin:24px auto 0;padding:12px 30px;
+  background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;
+  border:none;border-radius:14px;font-size:0.84rem;font-weight:700;
+  cursor:pointer;letter-spacing:0.05em;box-shadow:0 4px 18px rgba(124,58,237,0.25);}
+.btn-pdf:hover{opacity:0.87;}
+
+/* ─── OVERALL SECTIONS ─── */
+.overall-msg{text-align:left;}
+.om-section{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid rgba(124,58,237,0.08);}
+.om-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.om-section-title{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.13em;
+  color:#7c3aed;font-weight:700;margin-bottom:9px;}
+.overall-msg p{font-size:0.84rem;color:#2e2b4a;line-height:2.0;}
+
+/* ─── MOBILE ─── */
+@media(max-width:600px){
+  .container{padding:12px 10px;}
+  .key-cards{grid-template-columns:1fr;gap:10px;}
+  .kc{padding:18px 14px 14px;}
+  .nm-header{flex-direction:column;align-items:center;text-align:center;}
+  .nm-planet-art{margin:0 auto 10px;}
+  .grid-col-labels{grid-template-columns:repeat(3,72px)!important;margin-left:42px;}
+  .grid-row-labels{height:calc(72px*3+4px*2)!important;width:42px;}
+  .lo-shu{grid-template-columns:repeat(3,72px)!important;}
+  .gc{width:72px!important;height:72px!important;}
+  .grid-wrap{flex-direction:column;gap:20px;}
+  .missing-list{min-width:unset;width:100%;}
+  .daily-grid{grid-template-columns:1fr;}
+  .daily-item.full{grid-column:1;}
+  .date-row{grid-template-columns:1fr;}
+  .year-cycle-table th:nth-child(4),.year-cycle-table td:nth-child(4){display:none;}
+  .result-section{padding:0 4px;}
+  .advice-card{padding:16px 14px;}
+  .num-gallery{grid-template-columns:repeat(3,1fr)!important;}
+  .ng-card{padding:14px 8px 12px;}
+}
+
+/* ─── PRINT ─── */
+@media print {
+  #pw-overlay,.btn-reset,.btn-pdf,#form-section,header{display:none!important;}
+  body{background:#fff!important;}
+  .result-block{break-inside:avoid;margin-bottom:20px;}
+  .result-block.reveal{opacity:1!important;transform:none!important;}
+  .gc{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .gc{width:70px!important;height:70px!important;}
+  .grid-col-labels{grid-template-columns:repeat(3,70px)!important;}
+  .grid-row-labels{height:calc(70px * 3 + 4px * 2)!important;}
+}
+</style>
+</head>
+<body>
+
+<div id="pw-overlay" style="display:none;">
+  <div id="pw-box">
+    <div class="pw-logo">✦ Vedic Numerology</div>
+    <p>アクセスコードを入力してください</p>
+    <input type="password" id="pw-input" placeholder="パスワード" autocomplete="off" onkeydown="if(event.key==='Enter')checkPw()">
+    <button onclick="checkPw()">入室する</button>
+    <p class="pw-err" id="pw-err" hidden>パスワードが違います</p>
+  </div>
+</div>
+
+
+<!-- HEADER -->
+<header class="app-header">
+  <img src="vedicvidual.png" class="header-bg-img" alt="Vedic Numerology">
+</header>
+
+<!-- FORM -->
+<section class="form-section" id="form-section">
+  <div class="form-card">
+    <h2>鑑定情報を入力</h2>
+    <div class="field">
+      <label>お名前（ひらがな）</label>
+      <div class="date-row">
+        <input type="text" id="inp-sei" placeholder="苗字（例：やまだ）" autocomplete="off">
+        <input type="text" id="inp-mei" placeholder="名前（例：はなこ）" autocomplete="off">
+      </div>
+    </div>
+    <div class="field">
+      <label>生年月日</label>
+      <div class="date-row">
+        <select id="inp-year"><option value="">年</option></select>
+        <select id="inp-month"><option value="">月</option></select>
+        <select id="inp-day"><option value="">日</option></select>
+      </div>
+    </div>
+    <button class="btn-calc" onclick="calculate()">鑑定する</button>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+
+  <div class="result-name-bar">
+    <div class="rn-kana" id="r-name"></div>
+    <div class="rn-date" id="r-date"></div>
+    <div class="rn-divider"></div>
+  </div>
+
+  <!-- ① 3つの核の数字 -->
+  <div class="result-block reveal">
+    <div class="sec"><span class="sec-num">1</span><span class="sec-label">あなたの3つの核の数字</span></div>
+    <div class="explain-box">
+      <div class="ex-title">ヴェーダ数秘術とは</div>
+      <p>インドの古代哲学をもとにした数字の占術です。生年月日から3つの核となる数字を導き出し、<strong>その数字に対応する惑星のエネルギー</strong>があなたの性格・人生の方向性・時代の影響を表すと考えます。数字は1〜9のみ使い、すべて最終的に1桁に還元します。</p>
+    </div>
+    <div class="key-cards" id="r-keycards"></div>
+    <div class="explain-box">
+      <div class="ex-title">なぜこの3つの数字が出るの？</div>
+      <table class="calc-table" id="r-calc-table"></table>
+    </div>
+  </div>
+
+  <!-- ② 各数字の意味 -->
+  <div class="result-block reveal">
+    <div class="sec"><span class="sec-num">2</span><span class="sec-label">各数字の意味と読み解き</span></div>
+    <div id="r-num-meanings"></div>
+  </div>
+
+  <!-- ③ カルマ -->
+  <div class="result-block reveal" id="r-karma-block">
+    <div class="sec"><span class="sec-num">3</span><span class="sec-label">あなたの魂のカルマテーマ</span></div>
+    <div class="explain-box">
+      <div class="ex-title">ヴェーダ数秘術とカルマ・輪廻転生</div>
+      <p>ヴェーダ数秘術では、魂は<strong>輪廻転生（reincarnation）</strong>を繰り返し、前世から持ち越した課題を今世で学ぶために生まれてくると考えます。あなたのムーランク（誕生数）は、魂が今世で取り組むよう選んだ<strong>カルマのテーマ</strong>を示しています。これは罰ではなく、魂の成長のための「学びの設定」です。すべての人が、自分の数字に対応したカルマを持っています。</p>
+    </div>
+    <div id="r-karma-content"></div>
+  </div>
+
+  <!-- 数字1〜9 ギャラリー -->
+  <div class="result-block reveal">
+    <div class="sec"><span class="sec-num" id="r-numgallery-secnum">4</span><span class="sec-label">数字1〜9のエネルギーと意味</span></div>
+    <div class="explain-box">
+      <div class="ex-title">9つの惑星数字とイメージ</div>
+      <p>ヴェーダ数秘術では、1〜9の数字それぞれに惑星が対応し、固有のエネルギーを持ちます。グリッドに現れる数字、欠けた数字、あなたのムーランクやバーグヤンク…すべてはこの9つの宇宙のエネルギーで成り立っています。</p>
+    </div>
+    <div class="num-gallery" id="r-num-gallery"></div>
+  </div>
+
+  <!-- ⑤ グリッド -->
+  <div class="result-block reveal">
+    <div class="sec" id="r-grid-sec"><span class="sec-num" id="r-grid-secnum">4</span><span class="sec-label">ロー・シュー・グリッド</span></div>
+    <div class="explain-box">
+      <div class="ex-title">グリッドとは？どうやって作るの？</div>
+      <p><strong>生年月日の数字を1桁ずつバラバラにして</strong>、1〜9のマス目に並べた「エネルギーの地図」です。</p>
+      <p id="r-grid-explain" style="margin-top:10px;"></p>
+      <p style="margin-top:10px;"><strong>色のついたマス</strong> = あなたが持つ強みやエネルギー。同じ数字が2回以上あると、そのエネルギーが特に強い。<br><strong>点線の空マス</strong> = 今世の学びのテーマ。欠けていることは弱さではなく「伸びしろ」のサインです。<br>※「0」は使いません。0は宇宙の無を表し、グリッドには配置しません。</p>
+      <p style="margin-top:10px;font-size:0.75rem;color:var(--muted);padding:8px 12px;background:rgba(124,58,237,0.04);border-radius:8px;line-height:1.8;"><strong style="color:#5b21b6;">チャクラとは？</strong>　サンスクリット語で「車輪」を意味する体内のエネルギーセンターです。各マスの右上のアイコンは、その数字に対応するナヴァグラハ（9惑星）が司るチャクラを示しています。意識的に整えることで、そのエネルギーを日常生活に活かせます。</p>
+    </div>
+    <div class="grid-wrap">
+      <div class="grid-annotated">
+        <div class="grid-col-labels">
+          <span>過去・記憶</span>
+          <span>現在・自己</span>
+          <span>未来・可能性</span>
+        </div>
+        <div class="grid-rows-wrap">
+          <div class="grid-row-labels">
+            <span>思考・精神</span>
+            <span>感情・魂</span>
+            <span>物質・身体</span>
+          </div>
+          <div class="lo-shu" id="r-grid"></div>
+        </div>
+      </div>
+      <div class="missing-list" id="r-missing"></div>
+    </div>
+  </div>
+
+  <!-- ⑤ 今この時期 -->
+  <div class="result-block reveal">
+    <div class="sec" id="r-period-sec"><span class="sec-num" id="r-period-secnum">5</span><span class="sec-label">今この時期のエネルギーサイクル</span></div>
+    <div class="explain-box">
+      <div class="ex-title">ダシャー（Dasha）と個人年サイクル</div>
+      <p>ヴェーダ占星術には<strong>ダシャー（Dasha）</strong>という惑星周期の概念があります。魂は各惑星のエネルギーを順番に体験しながら、カルマを浄化していきます。数秘術ではこれが<strong>個人年サイクル（1〜9年周期）</strong>として現れます。9年で惑星エネルギーが一巡し、魂は新しいカルマのサイクルに入ります。<br><br><strong>生年月日＋現在の年（月・日）</strong>を足すことで「今あなたがどの惑星のダシャー（期間）にいるか」がわかります。<br>個人年：今年1年全体のテーマ　個人月：今月の流れ　個人日：今日のエネルギー</p>
+    </div>
+    <div class="period-cards" id="r-period-cards"></div>
+    <div id="r-period-reading"></div>
+  </div>
+
+  <!-- ⑥ ナーマンク -->
+  <div class="result-block reveal" id="r-name-section">
+    <div class="sec" id="r-name-sec"><span class="sec-num" id="r-name-secnum">6</span><span class="sec-label">ナーマンク — 名前のエネルギー</span></div>
+    <div class="explain-box">
+      <div class="ex-title">名前の数字とは</div>
+      <p>名前をローマ字に変換し、各文字に対応する数字（A=1,B=2…）をすべて足して1桁に還元します。名前は<strong>社会の中でどう生きるか・外側に見せるエネルギー</strong>を表します。結婚による改姓はこのエネルギーを大きく変える出来事です。</p>
+    </div>
+    <div id="r-name-cards"></div>
+  </div>
+
+  <!-- ⑦ アドバイス -->
+  <div class="result-block reveal">
+    <div class="sec" id="r-adv-sec"><span class="sec-num" id="r-adv-secnum">7</span><span class="sec-label">これからどうすればいいか — 実践アドバイス</span></div>
+    <div id="r-advice"></div>
+  </div>
+
+  <!-- ⑧ 総合 -->
+  <div class="result-block reveal">
+    <div class="sec" id="r-overall-sec"><span class="sec-num" id="r-overall-secnum">8</span><span class="sec-label">総合メッセージ</span></div>
+    <div class="overall-msg" id="r-overall"></div>
+  </div>
+
+  <button class="btn-reset" onclick="resetForm()">別の方を鑑定する</button>
+  <button class="btn-pdf" onclick="window.print()">📄 PDFとして保存</button>
+  <div style="height:20px;"></div>
+</section>
+<footer class="site-footer">© 2025 Bioiofactory. All rights reserved.</footer>
+
+<script>
+// ─── パスワード保護 ───
+(function(){
+  if(sessionStorage.getItem('vn_pw')==='ok') return;
+  document.getElementById('pw-overlay').style.display='flex';
+})();
+function checkPw(){
+  if(document.getElementById('pw-input').value==='test'){
+    sessionStorage.setItem('vn_pw','ok');
+    document.getElementById('pw-overlay').remove();
+  } else {
+    const err=document.getElementById('pw-err');
+    err.hidden=false;
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+// ─────────────────────────────────────
+// 惑星画像表示
+// ─────────────────────────────────────
+function planetSVG(n, size=52) {
+  const src = PLANET_IMG[n] || '';
+  return `<img src="${src}" width="${size}" height="${size}" style="object-fit:contain;display:block;" alt="${PLANET[n]||n}">`;
+}
+
+function planetSVGSmall(n) { return planetSVG(n, 44); }
+
+const PLANET_IMG = {
+  1:'19red.png', 2:'26white.png', 3:'3yellow.png', 4:'4black.png',
+  5:'5green.png', 6:'26white.png', 7:'7rainbow2.png', 8:'8blue.png', 9:'19red.png'
+};
+function chakraSVG(n, size=20) {
+  const src = PLANET_IMG[n] || '';
+  return `<img src="${src}" width="${size}" height="${size}" style="display:inline-block;vertical-align:middle;object-fit:contain;flex-shrink:0;" alt="${n}">`;
+}
+
+// ─────────────────────────────────────
+// DATA
+// ─────────────────────────────────────
+const PLANET = {1:'太陽',2:'月',3:'木星',4:'ラーフ',5:'水星',6:'金星',7:'ケートゥ',8:'土星',9:'火星'};
+const PLANET_SK = {1:'スーリヤ',2:'チャンドラ',3:'グル',4:'ラーフ',5:'ブダ',6:'シュクラ',7:'ケートゥ',8:'シャニ',9:'マンガラ'};
+const PLANET_DAILY = {
+  1:{color:'赤・オレンジ・ゴールド',gem:'ルビー（代替：ガーネット）',day:'日曜日',
+     mantra:'Om Suryaya Namaha（オーム・スーリヤーヤ・ナマハ）',
+     food:'小麦・小豆・生姜・サフラン・赤い野菜',
+     act:'朝の太陽礼拝（スーリヤ・ナマスカール）、日光を15〜30分浴びる、人前に立つ・リードする機会を持つ'},
+  2:{color:'白・シルバー・クリーム',gem:'パール（真珠）・ムーンストーン',day:'月曜日',
+     mantra:'Om Chandraya Namaha（オーム・チャンドラーヤ・ナマハ）',
+     food:'白米・牛乳・ヨーグルト・白い食べ物・ロータス',
+     act:'月光浴（特に満月）、感情日記、水辺で過ごす、瞑想・深呼吸'},
+  3:{color:'黄色・ゴールド',gem:'イエローサファイア（代替：トパーズ）',day:'木曜日',
+     mantra:'Om Guruve Namaha（オーム・グラヴェー・ナマハ）',
+     food:'ひよこ豆・ターメリック・バナナ・はちみつ・黄色い食べ物',
+     act:'学ぶ・教える・本を読む、感謝の祈り、慈善活動・人への親切'},
+  4:{color:'濃い青・黒・くすんだ茶色',gem:'ヘソナイト（ゴメド）',day:'土曜日（ラーフカール時間）',
+     mantra:'Om Rahuve Namaha（オーム・ラーフヴェー・ナマハ）',
+     food:'ゴマ・大麦・黒豆・根菜',
+     act:'執着を手放す練習、変化を受け入れる、瞑想で内なる幻想と向き合う'},
+  5:{color:'緑・エメラルドグリーン',gem:'エメラルド（代替：ペリドット）',day:'水曜日',
+     mantra:'Om Budhaya Namaha（オーム・ブダーヤ・ナマハ）',
+     food:'緑の野菜・アーモンド・ほうれん草・ミント',
+     act:'読む・書く・対話する、知識をシェアする、新しいスキルを学ぶ'},
+  6:{color:'白・虹色・ライトピンク',gem:'ダイヤモンド（代替：ホワイトサファイア・クリスタル）',day:'金曜日',
+     mantra:'Om Shukraya Namaha（オーム・シュクラーヤ・ナマハ）',
+     food:'乳製品・甘いもの・ローズティー・白い食べ物',
+     act:'芸術・音楽・創作活動、美しいものを鑑賞する、愛する人と時間を過ごす'},
+  7:{color:'グレー・多色・光る色',gem:'キャッツアイ（クリソベリル）',day:'火曜日（ケートゥ関連）',
+     mantra:'Om Ketave Namaha（オーム・ケートヴェー・ナマハ）',
+     food:'ゴマ・大根・根菜・ターメリック',
+     act:'瞑想・沈黙の時間、スピリチュアルな探求、執着を手放す、孤独に過ごす時間を大切に'},
+  8:{color:'黒・濃い青・ダークパープル',gem:'ブルーサファイア（代替：アメシスト・ラピスラズリ）',day:'土曜日',
+     mantra:'Om Shanaishcharaya Namaha（オーム・シャナイシュチャラーヤ・ナマハ）',
+     food:'黒ごま・黒豆・鉄分の多い食材・大麦',
+     act:'規律ある生活・早起き、奉仕活動（ボランティア）、地道な努力の継続、身体を鍛える'},
+  9:{color:'赤・珊瑚色・ピンク',gem:'レッドコーラル（赤珊瑚）（代替：カーネリアン）',day:'火曜日',
+     mantra:'Om Mangalaya Namaha（オーム・マンガラーヤ・ナマハ）',
+     food:'赤い食べ物・レンズ豆・辛いスパイス・ビーツ',
+     act:'運動・スポーツ・筋トレ、情熱を注げることへの積極的な行動、勇気を出す挑戦'},
+};
+
+const CHAKRA = {
+  1:{chakraNum:6,name:'アジュニャー',en:'Ajna',color:'#c0392b',desc:'第三の目・直観・洞察力',
+     what:'眉間の奥に位置する「第三の目」のエネルギーセンター。直観・洞察・霊的な認識を司ります。',
+     tips:'瞑想や夢の記録、直感に従う小さな選択を繰り返すことで活性化します。静かな時間を大切にしてください。'},
+  2:{chakraNum:7,name:'サハスラーラ',en:'Sahasrara',color:'#7c3aed',desc:'頭頂・宇宙意識・霊性',
+     what:'頭頂部に位置する最上位のチャクラ。宇宙との繋がり・悟り・霊的な目覚めを司ります。',
+     tips:'自然の中で過ごす時間や感謝の習慣を持つことで整います。執着を手放すことがカギです。'},
+  3:{chakraNum:5,name:'ヴィシュッダ',en:'Vishuddha',color:'#1d4ed8',desc:'喉・表現・創造的知性',
+     what:'喉に位置するチャクラ。言葉・表現・コミュニケーション・創造的な知性を司ります。',
+     tips:'本音を話す練習、歌う、書く、朗読などで活性化します。自分の声を信頼してください。'},
+  4:{chakraNum:6,name:'アジュニャー',en:'Ajna',color:'#6b21a8',desc:'第三の目・カルマの眼・幻想を見抜く力',
+     what:'眉間の奥に位置する「第三の目」のチャクラ。ラーフはここを通して幻想の世界を支配します。',
+     tips:'幻想と現実を見分ける訓練が大切です。瞑想・呼吸法・真実を語ることで整います。'},
+  5:{chakraNum:5,name:'ヴィシュッダ',en:'Vishuddha',color:'#1d4ed8',desc:'喉・コミュニケーション・知性',
+     what:'喉に位置するチャクラ。水星（ブダ）は知性・言語・コミュニケーションをここから発信します。',
+     tips:'自分の考えを言語化する習慣、日記、人との対話を増やすことで活性化します。'},
+  6:{chakraNum:4,name:'アナーハタ',en:'Anahata',color:'#15803d',desc:'心臓・愛・調和・美',
+     what:'胸の中央に位置するハートチャクラ。愛・慈悲・調和・美しさのエネルギーを司ります。',
+     tips:'感謝の気持ちを持つ、人や自然と触れ合う、美しいものを鑑賞するなどで開きます。'},
+  7:{chakraNum:1,name:'ムーラーダーラ',en:'Muladhara',color:'#b91c1c',desc:'根・大地・解脱・過去のカルマ',
+     what:'背骨の根元に位置する根のチャクラ。大地・安定・安全への欲求と過去カルマの解放を司ります。',
+     tips:'素足で大地に立つ、規則正しい生活、身体を動かすことで安定します。'},
+  8:{chakraNum:1,name:'ムーラーダーラ',en:'Muladhara',color:'#b91c1c',desc:'根・安定・試練・カルマの清算',
+     what:'背骨の根元に位置する根のチャクラ。土星（シャニ）はここを通して試練と忍耐を与えます。',
+     tips:'地道な習慣の継続、身体ケア、自然との接触で安定します。焦らず積み上げることが大切です。'},
+  9:{chakraNum:3,name:'マニプーラ',en:'Manipura',color:'#b45309',desc:'太陽神経叢・意志・情熱・行動力',
+     what:'みぞおちに位置するチャクラ。意志・自信・情熱・行動力・個人のパワーを司ります。',
+     tips:'目標を決めて行動する、身体を鍛える、情熱を注げることに取り組むことで活性化します。'},
+};
+const MYTH = {
+  1:{name:'スーリヤ（Sūrya）',
+     myth:'7頭の馬が引く黄金の戦車に乗り、天空を駆け巡る光の神。宇宙の魂（アートマン）の象徴とされ、すべての生命の源。息子には土星（シャニ）や死神（ヤマ）がいる。',
+     nature:'威厳・自信・リーダーシップ・父性のエネルギー。自我と意志の力。'},
+  2:{name:'チャンドラ（Candra）',
+     myth:'白馬10頭が引く月の戦車に乗る月神。賢者アトリの息子で、27の月宿（ナクシャトラ）を妻として支配する。ソーマ（聖なる飲み物）の神でもあり、心と感情を司る。',
+     nature:'感受性・直感・母性・夢。潮の満ち引きのように揺れる感情のエネルギー。'},
+  3:{name:'グル／ブリハスパティ（Guru / Bṛhaspati）',
+     myth:'神々（デーヴァ）の導師。知識・祈り・儀式の神。悪魔に奪われた神々を導き、宇宙の秩序（ダルマ）を守護する。黄色い衣をまとい、蓮の上に座す。',
+     nature:'知恵・拡大・豊かさ・精神的指導力。学び・教え・祝福のエネルギー。'},
+  4:{name:'ラーフ（Rāhu）',
+     myth:'実体を持たない影の惑星（月の昇交点）。乳海攪拌で生まれた不死の飲み物アムリタを盗み飲んだ悪魔スヴァルバーヌの頭部。太陽と月を飲み込んで日蝕・月蝕を引き起こすとされる。',
+     nature:'執着・変革・幻想・渇望。既成概念を超えた場所への強烈な引力のエネルギー。'},
+  5:{name:'ブダ（Budha）',
+     myth:'月神チャンドラと星の女神ターラーの息子。機知と話術の神。4本の腕を持ち、剣・盾・棍棒・祝福の印を持つ。水曜日（ブダワーラ）を司る。',
+     nature:'知性・コミュニケーション・適応力・商才。変化の中に中心軸を持つエネルギー。'},
+  6:{name:'シュクラ（Śukra）',
+     myth:'悪魔たち（アスラ）の導師。死者を蘇らせる秘術「ムリタサンジーヴァニー」を唯一知る神。美・芸術・愛の守護神。金星の光のように輝く白い姿。',
+     nature:'美・愛・芸術・官能・調和。関係性と喜びを創り出すヴィーナスのエネルギー。'},
+  7:{name:'ケートゥ（Ketu）',
+     myth:'実体を持たない影の惑星（月の降交点）。ラーフの胴体部分。過去世のカルマと解脱（モークシャ）を司る。人を物質界から引き離し、霊的な目覚めへと導く。',
+     nature:'霊性・直感・過去世・孤独・解脱。内なる宇宙への扉を開くエネルギー。'},
+  8:{name:'シャニ（Śani）',
+     myth:'太陽神スーリヤと影の女神チャーヤーの息子。ゆっくりと動く惑星で、厳格な因果律（カルマ）の執行者。正義と誠実さを試し、怠惰や不正には容赦しないが、努力には必ず報いる。',
+     nature:'試練・忍耐・カルマの清算・規律。時間をかけて積み上げる土星のエネルギー。'},
+  9:{name:'マンガラ（Maṅgala）',
+     myth:'大地（ブーミ）から生まれた戦神。真っ赤な体に4本の腕を持ち、剣・槍・蓮・棍棒を握る。勇者と戦士の守護神。火曜日（マンガラワーラ）を司る。',
+     nature:'行動力・勇気・情熱・闘争心。障害を突き破り前進し続ける火星のエネルギー。'},
+};
+const COLORS  = {1:'var(--c1)',2:'var(--c2)',3:'var(--c3)',4:'var(--c4)',5:'var(--c5)',6:'var(--c6)',7:'var(--c7)',8:'var(--c8)',9:'var(--c9)'};
+const COLORSL = {1:'var(--c1l)',2:'var(--c2l)',3:'var(--c3l)',4:'var(--c4l)',5:'var(--c5l)',6:'var(--c6l)',7:'var(--c7l)',8:'var(--c8l)',9:'var(--c9l)'};
+
+const NUMS = {
+  1:{image:['太陽','炎','王者','光'],kw:['意志','独立','リーダーシップ','自己表現'],
+    mulank:'強い意志と独自性を持つ性格。自分の道を自力で切り開くエネルギーがあります。人の先を行くことが多く、孤独を感じやすい面もありますが、その孤独の中で本当の自分が育ちます。「自分がどう思うか」を人の意見より大切にすることで本領が発揮されます。',
+    bhagyank:'人生は「自分の力で切り開く」方向に向かっています。誰かに依存するより、自分が先頭に立つ場面で運命が大きく動きます。リーダー的な立場・独自の道で輝きます。',
+    yearNum:'生まれた時代に太陽のエネルギーが流れていました。独立・自立を重んじる価値観を幼少期から受け取っています。',
+    good:['自分の意見を堂々と発信すること','独立した取り組み・自分のプロジェクト','リーダーシップを発揮する場面'],
+    care:['プライドが邪魔して助けを求められない','周りを引っ張りすぎて孤立する','自分の正しさにこだわりすぎる'],
+    action:'「今日、自分はどうしたいか？」を毎日確認する習慣をつけましょう。誰かに頼ることも強さです。',
+    missing:'自己主張・独立心・「自分の意見を持つ」力が今世の学びのテーマ。他者に同調しすぎる傾向があります。'},
+  2:{image:['月','水面','鏡','夢'],kw:['感受性','協調','直感','受け取る力'],
+    mulank:'繊細な感受性と深い直感が本質にあります。人の気持ちに敏感で場の空気を読む力があります。感情の波が大きくなりやすいですが、その共感力が最大の強みです。一人の時間と人と過ごす時間のバランスが大切です。',
+    bhagyank:'人生は「人との調和・協力・パートナーシップ」の方向に向かっています。一人より二人、チームの中で力が何倍にもなります。',
+    yearNum:'生まれた時代に月のエネルギーが流れていました。感情や直感を大切にする感性を幼少期から育みました。',
+    good:['サポート・調整役・縁の下の力持ち','パートナーシップや二人三脚の取り組み','人の話をじっくり聞くこと'],
+    care:['感受性が高すぎて疲弊する','自分の感情を後回しにしすぎる','決断が遅くなる'],
+    action:'「ノー」と言う練習をしましょう。自分を後回しにしすぎると感情が崩れます。',
+    missing:'受け取る力・頼る力・感情を表現すること・協調性が今世の学びのテーマ。'},
+  3:{image:['知恵','豊穣','師','光'],kw:['知恵','拡大','豊かさ','楽観性'],
+    mulank:'木星（グル）のエネルギーが本質にあります。深い知恵・精神的な豊かさ・人を導く力が自然に備わっています。学ぶことへの喜びが強く、知識を通じて周囲を明るくします。楽観的で大きな視野を持ちますが、エネルギーが分散しやすい面も。',
+    bhagyank:'人生は「知恵を広め、豊かさを分かち合うこと」の方向に向かっています。精神的な豊かさと人の成長に貢献する運命があります。',
+    yearNum:'生まれた時代に木星のエネルギーが流れていました。豊かさ・知恵・精神的な拡大のエネルギーを幼少期から受け取っています。',
+    good:['学ぶこと・知識を深めること・教えること','精神的な豊かさを育む活動','人を導き・励ます役割'],
+    care:['エネルギーが分散して何も完成しない','楽観的すぎてリスクを見落とす','知識の蓄積に走り行動が伴わない'],
+    action:'一つのことを最後まで完成させる習慣をつけましょう。知識は行動に移してこそ輝きます。',
+    missing:'知恵を深めること・精神的な豊かさ・人を導くエネルギーが今世の学びのテーマ。'},
+  4:{image:['迷宮','影','変革者','嵐'],kw:['革新','突破','執着','未知への渇望'],
+    mulank:'既成概念を壊したい衝動と、安定したい欲求が同時にある複雑な本質を持ちます。強烈な渇望とこだわりがあります。ラーフのエネルギーは予測不能で革命的。「普通」では満足できません。',
+    bhagyank:'人生は「既成概念を超えた場所」に向かっています。予測不能な展開・革新的な生き方の中に運命があります。',
+    yearNum:'生まれた時代にラーフのエネルギーが流れていました。変革・革新の風を幼少期から受け取っています。',
+    good:['常識にとらわれない発想と行動','新しいことへの挑戦・パイオニア的な取り組み','直感を信じて動くこと'],
+    care:['一つのことに執着しすぎる','不安定な状況を自ら作り出す','継続が苦手で途中放棄しやすい'],
+    action:'「地道に積み上げること」を意識的に選ぶ練習をしましょう。遠回りが実は一番の近道です。',
+    missing:'忍耐・地道な積み上げ・実務・基盤作りが今世の学びのテーマ。'},
+  5:{image:['風','旅人','水','流れ'],kw:['自由','変化','知性','中心軸'],
+    mulank:'変化と自由が大好き。頭の回転が速くコミュニケーション能力が高いです。飽きやすい面がありますが、その多様性が武器になります。',
+    bhagyank:'人生は「変化・多様性・自由」の方向に向かっています。一つに縛られない多彩な人生が運命。旅・移動・多様な出会いの中に鍵があります。',
+    yearNum:'生まれた時代に水星のエネルギーが流れていました。知性・情報・変化への適応力を幼少期から育みました。',
+    good:['多様な経験を積むこと','コミュニケーション・発信・情報収集','新しい環境への適応'],
+    care:['自由を求めすぎて責任から逃げる','飽き性で継続が難しい','中心軸がブレて周囲に振り回される'],
+    action:'「自分の軸は何か？」を定期的に確認しましょう。5の中心の欠落は特に軸が揺らぎやすいサインです。',
+    missing:'自己軸・「自分はこれでいい」という確信が今世の最重要テーマ。5の欠落はグリッド中央が空になる特別なカルマのサインです。'},
+  6:{image:['薔薇','愛','調和','家'],kw:['愛','美','調和','責任','家族'],
+    mulank:'美と愛を大切にする心が本質にあります。人の世話をする・責任を持って関わる力があります。完璧主義・心配性になりやすいですが、それは深い愛情の裏返しです。',
+    bhagyank:'人生は「愛・美・調和・人との深い繋がり」の方向に向かっています。人を癒し・美しいものを生み出す運命があります。',
+    yearNum:'生まれた時代に金星のエネルギーが流れていました。美・愛・調和の価値観を幼少期から受け取っています。',
+    good:['人のケア・サポート・癒し系の活動','美しいもの・心地よい環境を作ること','家族や大切な人との時間'],
+    care:['世話を焼きすぎて自分が疲れる','完璧主義で自分も他人も苦しめる','NOと言えなくて抱え込む'],
+    action:'「自分の心地よさ」を最優先にする日を週に一日作りましょう。',
+    missing:'深い愛情関係・家族・責任・美を創ることが今世の学びのテーマ。心を開く練習を。'},
+  7:{image:['星','孤独','賢者','宇宙'],kw:['霊性','直感','内省','真理探求'],
+    mulank:'深い内省と霊的な直感が本質にあります。一人の時間が必要で、表面より本質を見る目があります。孤立しやすいですが内なる知恵が豊かです。',
+    bhagyank:'人生は「真理の探求・霊性・内なる世界の深化」の方向に向かっています。精神的な深みが人生の軸になります。',
+    yearNum:'生まれた時代にケートゥのエネルギーが流れていました。見えないものへの感性・内省の習慣を幼少期から育みました。',
+    good:['一人でじっくり考える・内省の時間','スピリチュアルな探求・瞑想・内観','本質を深く掘り下げること'],
+    care:['孤立しすぎて社会とのつながりが薄れる','現実的な行動が後回しになる','疑い深くなりすぎる'],
+    action:'毎日5分、静かに自分の内側に向き合う時間を作りましょう。直感が磨かれます。',
+    missing:'内省・直感を信頼すること・一人の時間・霊性が今世の学びのテーマ。'},
+  8:{image:['天秤','岩','鎖','時間'],kw:['試練','忍耐','法則','実行力'],
+    mulank:'強い実行力と忍耐力が本質にあります。試練が多い人生ですが、乗り越えた後の力が誰より強いです。努力が正直に実を結びます。',
+    bhagyank:'人生は「試練を通じた成長・現実での達成」の方向に向かっています。若いうちの苦労は後から大きな財産になります。',
+    yearNum:'生まれた時代に土星のエネルギーが流れていました。努力・忍耐・責任の価値観を幼少期から受け取っています。',
+    good:['地道な努力の積み重ね','責任ある仕事・長期的なプロジェクト','現実的な計画を立てて実行すること'],
+    care:['完璧になるまで動けない','ルールや制限にこだわりすぎる','自分を追い込みすぎる'],
+    action:'「70点でも動く」を意識しましょう。土星の人は完璧を待ちすぎて出遅れる傾向があります。',
+    missing:'物質的な現実・お金・実行力との健全な関係が今世の学びのテーマ。'},
+  9:{image:['炎','勇者','行動','情熱'],kw:['行動力','勇気','情熱','エネルギー'],
+    mulank:'火星のエネルギーが本質にあります。強烈な行動力・勇気・情熱が本質にあります。目標に向かって突き進む力が強く、困難にも怯まない強さがあります。感情が激しく燃え上がることもありますが、それがこのエネルギーの源泉です。',
+    bhagyank:'人生は「勇気を持って行動し、道を切り開くこと」の方向に向かっています。火星のエネルギーで壁を突き破る運命があります。',
+    yearNum:'生まれた時代に火星のエネルギーが流れていました。情熱・行動力・勇気のエネルギーを幼少期から受け取っています。',
+    good:['果敢に行動すること・先頭に立つこと','困難に立ち向かう挑戦','情熱を持って取り組める活動'],
+    care:['怒りや衝動が行動を歪める','強引すぎて周囲との摩擦が生まれる','燃え尽きて消耗する'],
+    action:'怒りやエネルギーを「行動・創造・人への奉仕」に昇華させましょう。火星のエネルギーは使い方次第で最大の武器になります。',
+    missing:'行動力・勇気・自分のエネルギーを信頼することが今世の学びのテーマ。'}
+};
+
+const KARMA = {
+  1:{ planet:'太陽',
+    title:'太陽のカルマ「自己と意志の課題」',
+    meaning:'前世で他者への依存や自己放棄があったとされます。今世は<strong>自分の意志で立ち、リーダーシップを発揮すること</strong>が魂のテーマです。',
+    signs:'人の顔色ばかりうかがう・自分の意見を言えない・決断を先延ばしにする場面が試練のサインです。',
+    howto:'毎日「自分はどうしたいか」を問い、小さな決断を自分でする練習を。他人に頼りすぎず、自分の道を選んでください。',
+    good:'このカルマを乗り越えると、<strong>揺るぎない自己確立</strong>と、周囲から信頼されるリーダーとしての存在感が生まれます。'},
+  2:{ planet:'月',
+    title:'月のカルマ「感情と関係性の課題」',
+    meaning:'前世で感情を抑圧したり、人間関係から逃げた魂の記憶があります。今世は<strong>感情を素直に表現し、深い絆を育てること</strong>がテーマです。',
+    signs:'感情を飲み込みすぎる・人に頼れない・孤独感が抜けない場面が試練のサインです。',
+    howto:'「助けてください」「嬉しい」「悲しい」を言葉にする習慣を。感情は弱さではなく魂の言語です。',
+    good:'このカルマを乗り越えると、<strong>深い共感力</strong>と、人の心に寄り添える温かいリーダーシップが花開きます。'},
+  3:{ planet:'木星',
+    title:'木星のカルマ「表現と誠実さの課題」',
+    meaning:'前世で才能を隠したり、責任から逃げた記憶があります。今世は<strong>自分の声・表現・創造性を世に出すこと</strong>が魂のテーマです。',
+    signs:'自己表現への恐れ・中途半端に終わるプロジェクト・約束を守れない場面が試練のサインです。',
+    howto:'アイデアは形にすること。完璧でなくても発信・完成させることが浄化の鍵です。',
+    good:'このカルマを乗り越えると、<strong>豊かな創造力</strong>と、人を喜ばせ引き付けるカリスマ的な魅力が育まれます。'},
+  4:{ planet:'ラーフ',
+    title:'ラーフのカルマ「地道な努力と変革の課題」',
+    meaning:'前世で怠惰・近道を探す・現実逃避があったとされます。今世は<strong>「コツコツと積み上げる」こと</strong>が魂の修行テーマです。',
+    signs:'近道を探したくなる・すぐに結果を求める・誰かに頼りたくなる場面が試練のサインです。',
+    howto:'小さな努力を毎日続けること。「急がば回れ」を体で覚えることでカルマは浄化されます。',
+    good:'このカルマを乗り越えた先には、<strong>誰にも揺るがせない強固な基盤</strong>と、周囲が認める揺るぎない信頼が生まれます。'},
+  5:{ planet:'水星',
+    title:'水星のカルマ「自由と責任の課題」',
+    meaning:'前世で不安定・無責任・逃避があった魂の記憶があります。今世は<strong>変化を恐れず、自由の中に責任を見出すこと</strong>がテーマです。',
+    signs:'飽きやすい・コミットメントへの恐れ・逃げ出したくなる衝動が試練のサインです。',
+    howto:'一つのことをやり遂げる体験を重ねて。変化は敵ではなく、魂の成長の燃料です。',
+    good:'このカルマを乗り越えると、<strong>柔軟な適応力</strong>と、どんな変化も乗りこなす真の自由人として輝きます。'},
+  6:{ planet:'金星',
+    title:'金星のカルマ「愛と犠牲の課題」',
+    meaning:'前世で愛を与えすぎ自分を失った、または愛を拒絶した記憶があります。今世は<strong>自己愛と他者愛のバランスを学ぶこと</strong>がテーマです。',
+    signs:'自己犠牲しすぎる・見返りを求めすぎる・完璧主義が人間関係を壊す場面が試練のサインです。',
+    howto:'まず自分を大切にすること。「与える」前に「自分が満たされているか」を確認してください。',
+    good:'このカルマを乗り越えると、<strong>深く豊かな愛を与えながら自分も幸せでいられる</strong>、真に美しい人間関係が築けます。'},
+  7:{ planet:'ケートゥ',
+    title:'ケートゥのカルマ「孤独と霊性の課題」',
+    meaning:'前世で物質への執着・現実への没頭があった魂の記憶があります。今世は<strong>内なる世界・霊性・直感を信頼すること</strong>がテーマです。',
+    signs:'孤独感・信仰や直感への疑い・現実と精神世界の間で引き裂かれる感覚が試練のサインです。',
+    howto:'静寂の中に答えを求める時間を作ること。瞑想・自然・学びがこのカルマを浄化します。',
+    good:'このカルマを乗り越えると、<strong>深い洞察力と霊的な智慧</strong>が花開き、人生の真の意味を体感できる境地に達します。'},
+  8:{ planet:'土星',
+    title:'土星のカルマ「因果と正義の課題」',
+    meaning:'前世で権力の乱用・物質への執着・不公正な行いがあった記憶があります。今世は<strong>「蒔いた種を刈り取る」因果律と真摯に向き合うこと</strong>がテーマです。',
+    signs:'壁・遅延・試練が繰り返し現れる・努力が実るまでに時間がかかると感じる場面が試練のサインです。',
+    howto:'誠実に・正直に・コツコツと。土星は誤魔化しを許しませんが、真摯な努力には必ず報酬を与えます。',
+    good:'このカルマを乗り越えると、<strong>揺るぎない精神力と社会的な大きな成功・影響力</strong>を手にします。最も遅く、最も強固な成功が待っています。'},
+  9:{ planet:'火星',
+    title:'火星のカルマ「怒りと完結の課題」',
+    meaning:'前世で怒り・破壊的なエネルギーを使った魂の記憶があります。今世はそのエネルギーを<strong>建設的な方向に使い、古いものを手放して完結させること</strong>がテーマです。',
+    signs:'怒りが突然湧く・過去が手放せない・やり残した感覚が続く場面が試練のサインです。',
+    howto:'怒りを抑えるのではなく、行動・創造・奉仕に昇華させること。「手放し」と「許し」がこのカルマの解放の鍵です。',
+    good:'このカルマを乗り越えると、<strong>強大な情熱を建設的に使いこなし</strong>、周囲を鼓舞するエネルギッシュなリーダーとして輝きます。'}
+};
+
+const PERIOD_READING = {
+  1:{theme:'スタート・新しい始まり',body:'新しい物事を始めるのに最適な時期です。種を蒔く年。勇気を出して行動を起こしましょう。',good:'新しい挑戦・独立・自己発信',care:'衝動的に動きすぎない'},
+  2:{theme:'準備・関係・待つ',body:'物事が水面下で育っている時期です。焦らず人間関係を育て、協力者とのつながりを深めましょう。',good:'パートナーシップ・人との縁を大切に',care:'焦りは禁物。待つことも戦略'},
+  3:{theme:'表現・創造・楽しむ',body:'エネルギーが外側に向かう時期。発信・創造・人と楽しむことでチャンスが広がります。',good:'創作・発信・新しい人脈',care:'お金の浪費に注意'},
+  4:{theme:'基盤作り・実務・現実',body:'地に足をつけて仕組みを作る時期。根を張る年なので、目に見えない努力が後で大きく実ります。',good:'組織作り・ルーティン・長期計画',care:'焦りや近道を探す衝動に注意'},
+  5:{theme:'変化・自由・新展開',body:'変化と流れが加速する時期。柔軟に対応することで思わぬ展開が生まれます。旅・移動・人との出会いがカギ。',good:'新しい挑戦・環境の変化',care:'衝動的な決断は後悔のもと'},
+  6:{theme:'愛・家族・責任',body:'人との深い繋がりや家庭・コミュニティにフォーカスが当たる時期。ケアする・される体験が魂を豊かにします。',good:'家族・パートナーとの時間・人のサポート',care:'抱え込みすぎない'},
+  7:{theme:'内省・学び・立ち止まる',body:'外側より内側に向かう時期。一人の時間・学び・自分を見つめ直すことが大切です。急いで答えを出さないで。',good:'自己探求・専門知識を深める・瞑想',care:'孤立に注意。社会とのつながりを保って'},
+  8:{theme:'達成・収穫・現実の力',body:'努力が実り始める時期。現実的な目標に向けて力強く動くことで大きな成果が生まれます。お金・キャリアの動きも活発に。',good:'ビジネス・財務・長期的な目標への行動',care:'強引になりすぎない・体の疲れに注意'},
+  9:{theme:'行動・エネルギーの解放・情熱の年',body:'火星のエネルギーが最高潮に達する時期。内側に蓄積されてきた力を一気に解放し、果敢に行動することで大きな突破口が開きます。情熱の赴くままに動くことが鍵。',good:'大胆な行動・挑戦・情熱を注げる取り組み',care:'怒りや衝動による判断ミスに注意。エネルギーを建設的な方向に向けて'}
+};
+
+// ─────────────────────────────────────
+// ひらがな → ローマ字
+// ─────────────────────────────────────
+const KANA_MAP = [
+  ['きゃ','kya'],['きゅ','kyu'],['きょ','kyo'],['しゃ','sha'],['しゅ','shu'],['しょ','sho'],
+  ['ちゃ','cha'],['ちゅ','chu'],['ちょ','cho'],['にゃ','nya'],['にゅ','nyu'],['にょ','nyo'],
+  ['ひゃ','hya'],['ひゅ','hyu'],['ひょ','hyo'],['みゃ','mya'],['みゅ','myu'],['みょ','myo'],
+  ['りゃ','rya'],['りゅ','ryu'],['りょ','ryo'],['ぎゃ','gya'],['ぎゅ','gyu'],['ぎょ','gyo'],
+  ['じゃ','ja'],['じゅ','ju'],['じょ','jo'],['びゃ','bya'],['びゅ','byu'],['びょ','byo'],
+  ['ぴゃ','pya'],['ぴゅ','pyu'],['ぴょ','pyo'],
+  ['あ','a'],['い','i'],['う','u'],['え','e'],['お','o'],
+  ['か','ka'],['き','ki'],['く','ku'],['け','ke'],['こ','ko'],
+  ['さ','sa'],['し','shi'],['す','su'],['せ','se'],['そ','so'],
+  ['た','ta'],['ち','chi'],['つ','tsu'],['て','te'],['と','to'],
+  ['な','na'],['に','ni'],['ぬ','nu'],['ね','ne'],['の','no'],
+  ['は','ha'],['ひ','hi'],['ふ','fu'],['へ','he'],['ほ','ho'],
+  ['ま','ma'],['み','mi'],['む','mu'],['め','me'],['も','mo'],
+  ['や','ya'],['ゆ','yu'],['よ','yo'],
+  ['ら','ra'],['り','ri'],['る','ru'],['れ','re'],['ろ','ro'],
+  ['わ','wa'],['を','wo'],['ん','n'],
+  ['が','ga'],['ぎ','gi'],['ぐ','gu'],['げ','ge'],['ご','go'],
+  ['ざ','za'],['じ','ji'],['ず','zu'],['ぜ','ze'],['ぞ','zo'],
+  ['だ','da'],['ぢ','ji'],['づ','zu'],['で','de'],['ど','do'],
+  ['ば','ba'],['び','bi'],['ぶ','bu'],['べ','be'],['ぼ','bo'],
+  ['ぱ','pa'],['ぴ','pi'],['ぷ','pu'],['ぺ','pe'],['ぽ','po'],
+  ['っ',''],['ー',''],['　',' '],[' ',' ']
+];
+function kanaToRomaji(str) {
+  let r = str.trim().toLowerCase();
+  for (const [k,v] of KANA_MAP) r = r.split(k).join(v);
+  return r.toUpperCase().replace(/[^A-Z ]/g,'');
+}
+const PYT = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
+function nameToNum(romaji) {
+  return romaji.split('').filter(c=>c!==' ').reduce((s,c)=>s+(PYT[c]||0),0);
+}
+
+// ─────────────────────────────────────
+// 計算（ヴェーダ式：常に1〜9）
+// ─────────────────────────────────────
+function reduce9(n) {
+  while(n>9) n=String(n).split('').reduce((s,d)=>s+ +d,0);
+  return n;
+}
+function getMulank(day)  { return reduce9(day); }
+function getBhagyank(day,month,year) {
+  return reduce9([...String(day),...String(month),...String(year)].reduce((a,d)=>a+ +d,0));
+}
+function getYearNum(year) {
+  return reduce9([...String(year)].reduce((a,d)=>a+ +d,0));
+}
+function getPersonalYear(day,month,curYear) {
+  return reduce9([...String(day),...String(month),...String(curYear)].reduce((a,d)=>a+ +d,0));
+}
+function getPersonalMonth(py,curMonth){ return reduce9(py+curMonth); }
+function getPersonalDay(pm,curDay)    { return reduce9(pm+curDay); }
+
+function getGridDigits(day,month,year) {
+  const str = String(day).padStart(2,'0')+String(month).padStart(2,'0')+String(year);
+  const c={};
+  for(const d of str) if(d!=='0') c[d]=(c[d]||0)+1;
+  return c;
+}
+
+// ─────────────────────────────────────
+// セクション番号の自動更新
+// ─────────────────────────────────────
+function updateSecNums(hasKarma) {
+  if(hasKarma){
+    document.getElementById('r-numgallery-secnum').textContent='4';
+    document.getElementById('r-grid-secnum').textContent='5';
+    document.getElementById('r-period-secnum').textContent='6';
+    document.getElementById('r-name-secnum').textContent='7';
+    document.getElementById('r-adv-secnum').textContent='8';
+    document.getElementById('r-overall-secnum').textContent='9';
+  } else {
+    document.getElementById('r-numgallery-secnum').textContent='3';
+    document.getElementById('r-grid-secnum').textContent='4';
+    document.getElementById('r-period-secnum').textContent='5';
+    document.getElementById('r-name-secnum').textContent='6';
+    document.getElementById('r-adv-secnum').textContent='7';
+    document.getElementById('r-overall-secnum').textContent='8';
+  }
+}
+
+// ─────────────────────────────────────
+// UI
+// ─────────────────────────────────────
+function initSelects() {
+  const yr=document.getElementById('inp-year');
+  for(let y=new Date().getFullYear();y>=1920;y--) yr.innerHTML+=`<option value="${y}">${y}年</option>`;
+  const mo=document.getElementById('inp-month');
+  for(let m=1;m<=12;m++) mo.innerHTML+=`<option value="${m}">${m}月</option>`;
+  const dy=document.getElementById('inp-day');
+  for(let d=1;d<=31;d++) dy.innerHTML+=`<option value="${d}">${d}日</option>`;
+}
+
+function buildLetterRow(romaji) {
+  return romaji.split('').filter(c=>c!==' ').map(c=>{
+    const v=PYT[c]||0;
+    return `<div class="lb"><div class="lc">${c}</div><div class="ln">${v}</div></div>`;
+  }).join('');
+}
+
+function calculate() {
+  const sei   = document.getElementById('inp-sei').value.trim();
+  const mei   = document.getElementById('inp-mei').value.trim();
+  const name  = [sei, mei].filter(Boolean).join(' ');
+  const year  = parseInt(document.getElementById('inp-year').value);
+  const month = parseInt(document.getElementById('inp-month').value);
+  const day   = parseInt(document.getElementById('inp-day').value);
+  if(!year||!month||!day){ alert('生年月日を入力してください'); return; }
+
+  const now=new Date();
+  const curYear=now.getFullYear(), curMonth=now.getMonth()+1, curDay=now.getDate();
+
+  const mul   = getMulank(day);
+  const bha   = getBhagyank(day,month,year);
+  const yr    = getYearNum(year);
+  const karma = mul; // ヴェーダ数秘：全員がムーランクに対応するカルマを持つ
+  const grid  = getGridDigits(day,month,year);
+  const missing=[1,2,3,4,5,6,7,8,9].filter(n=>!grid[String(n)]);
+
+  const py=getPersonalYear(day,month,curYear);
+  const pm=getPersonalMonth(py,curMonth);
+  const pd=getPersonalDay(pm,curDay);
+
+  let nameParts=[];
+  if(name){
+    const parts=name.split(/\s+/);
+    nameParts=parts.map(p=>{
+      const roma=kanaToRomaji(p),total=nameToNum(roma),reduced=reduce9(total);
+      return{kana:p,roma,total,reduced,isFull:false};
+    });
+    const fr=kanaToRomaji(name.replace(/\s+/g,' ')),ft=nameToNum(fr),frd=reduce9(ft);
+    nameParts.push({kana:name,roma:fr,total:ft,reduced:frd,isFull:true});
+  }
+
+  // 表示
+  document.getElementById('r-name').textContent = name||'（名前未入力）';
+  document.getElementById('r-date').textContent = `${year}年${month}月${day}日`;
+
+  // ① 基本数字カード
+  const cards=document.getElementById('r-keycards');
+  cards.innerHTML=`
+    <div class="kc kc-mul">
+      <div class="kc-planet-img">${planetSVG(mul)}</div>
+      <div class="kc-big" style="color:${COLORS[mul]}">${mul}</div>
+      <div class="kc-name">ムーランク</div>
+      <div class="kc-planet-name" style="color:${COLORS[mul]}">${PLANET[mul]}</div>
+      <div class="kc-sanskrit">${PLANET_SK[mul]}</div>
+      <div class="kc-role">素の性格・本能<br>前世から持ち越した<br>今世のカルマの核</div>
+      <div style="font-size:0.68rem;margin-top:8px;padding:4px 10px;background:linear-gradient(90deg,#5b21b6,#7c3aed);color:#fff;border-radius:20px;display:inline-block;white-space:nowrap;">最重要・実践を優先</div>
+    </div>
+    <div class="kc kc-bha">
+      <div class="kc-planet-img">${planetSVG(bha)}</div>
+      <div class="kc-big" style="color:${COLORS[bha]}">${bha}</div>
+      <div class="kc-name">バーグヤンク</div>
+      <div class="kc-planet-name" style="color:${COLORS[bha]}">${PLANET[bha]}</div>
+      <div class="kc-sanskrit">${PLANET_SK[bha]}</div>
+      <div class="kc-role">人生の方向性・運命<br>魂の使命・目指す先</div>
+    </div>
+    <div class="kc kc-yr">
+      <div class="kc-planet-img">${planetSVG(yr)}</div>
+      <div class="kc-big" style="color:${COLORS[yr]}">${yr}</div>
+      <div class="kc-name">年の数字</div>
+      <div class="kc-planet-name" style="color:${COLORS[yr]}">${PLANET[yr]}</div>
+      <div class="kc-sanskrit">${PLANET_SK[yr]}</div>
+      <div class="kc-role">生まれた時代の影響<br>幼少期に受け取ったもの<br><span style="font-size:0.60rem;opacity:0.75;">（補助的な数字）</span></div>
+    </div>
+  `;
+
+  // 計算表
+  const bhaDigits=[...String(day),...String(month),...String(year)];
+  const bhaSum=bhaDigits.reduce((a,d)=>a+ +d,0);
+  const yrDigits=[...String(year)];
+  const yrSum=yrDigits.reduce((a,d)=>a+ +d,0);
+  const mulSteps=day>9?`${day} → ${String(day).split('').join('＋')} = ${mul}`:`${day}（1桁のためそのまま）`;
+  document.getElementById('r-calc-table').innerHTML=`
+    <tr><td>ムーランク<br><span style="font-size:0.65rem;opacity:0.75;">（誕生日 → カルマテーマ）</span></td><td>${day}日生まれ → ${mulSteps} ＝ <strong>${mul}</strong>（${PLANET[mul]}のカルマ）</td></tr>
+    <tr><td>バーグヤンク<br><span style="font-size:0.65rem;opacity:0.75;">（生年月日の全数字）</span></td><td>${bhaDigits.join('＋')} ＝ ${bhaSum} → <strong>${bha}</strong></td></tr>
+    <tr><td>年の数字<br><span style="font-size:0.65rem;opacity:0.75;">（生まれた年）</span></td><td>${yrDigits.join('＋')} ＝ ${yrSum} → <strong>${yr}</strong></td></tr>
+  `;
+
+  // ② 各数字の意味
+  const meanings=document.getElementById('r-num-meanings');
+  const readItems=[
+    {num:mul,label:'ムーランク（魂の本質）',role:'素の性格・本能的な行動パターン・生まれ持ったエネルギーの質',field:'mulank',showKarma:false},
+    {num:bha,label:'バーグヤンク（運命の方向）',role:'人生全体が向かっている方向・魂の使命・長期的なテーマ',field:'bhagyank',showKarma:false},
+    {num:yr, label:'年の数字（時代の影響）',  role:'生まれた時代から受け取ったエネルギー。幼少期の環境・親世代の価値観',field:'yearNum',showKarma:false},
+  ];
+  meanings.innerHTML=readItems.map(r=>{
+    const d=NUMS[r.num], c=COLORS[r.num], cl=COLORSL[r.num];
+    const karmaNote='';
+    return `
+      <div class="num-meaning" style="border-top:4px solid ${c};">
+        <div class="nm-header">
+          <div class="nm-planet-art">${planetSVG(r.num,64)}</div>
+          <div class="nm-info">
+            <div class="nm-label">${r.label}</div>
+            <div class="nm-title" style="color:${c}">${r.num}  ${PLANET[r.num]}</div>
+            <div class="nm-role">${r.role}</div>
+          </div>
+        </div>
+        <div class="nm-body">
+          <div class="nm-section">この数字が表すもの</div>
+          <p>${d[r.field]}</p>
+          <div style="margin-top:6px;">${d.kw.map(k=>`<span class="tag" style="background:${cl};color:${c};border:1px solid ${c}33;">${k}</span>`).join('')}</div>
+          ${karmaNote}
+          <div class="myth-box">
+            <div class="myth-name">${MYTH[r.num]?.name||''}</div>
+            <div class="myth-body">${MYTH[r.num]?.myth||''}</div>
+            <div class="myth-nature">${MYTH[r.num]?.nature||''}</div>
+          </div>
+          <div class="chakra-box">
+            <div class="chakra-reason">${
+              r.field==='mulank'
+                ? `あなたの<strong>ムーランクは ${r.num}（${PLANET[r.num]}）</strong>。${PLANET[r.num]}の惑星実践を続けることで<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>が整い、あなたが本来持つムーランクのエネルギーが自然に発揮されるようになります。`
+              : r.field==='bhagyank'
+                ? `あなたの<strong>バーグヤンクは ${r.num}（${PLANET[r.num]}）</strong>。${PLANET[r.num]}の惑星実践で<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>を整えることで、魂の使命へ向かう流れがより自然に動き出します。`
+              : `あなたの<strong>年の数字は ${r.num}（${PLANET[r.num]}）</strong>。幼少期から受け取ったこのエネルギーは<strong>第${CHAKRA[r.num].chakraNum}チャクラ（${CHAKRA[r.num].name}）</strong>に宿っており、実践で解放されます。`
+            }</div>
+            <div class="chakra-name"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${CHAKRA[r.num].color};box-shadow:0 0 6px ${CHAKRA[r.num].color}66;flex-shrink:0;"></span> 第${CHAKRA[r.num].chakraNum}チャクラ：${CHAKRA[r.num].name}（${CHAKRA[r.num].en}）</div>
+            <div class="chakra-what">${CHAKRA[r.num].what}</div>
+            <div class="daily-bridge">${PLANET[r.num]}（数字${r.num}）の惑星実践でこのチャクラを整える</div>
+            <div class="daily-note">以下の色・石・食材を日常に取り入れ、吉日（${PLANET_DAILY[r.num].day}）を意識することで${PLANET[r.num]}のエネルギーが高まり、第${CHAKRA[r.num].chakraNum}チャクラが活性化されます。</div>
+            <div class="daily-grid">
+              <div class="daily-item"><strong>ラッキーカラー</strong>：${PLANET_DAILY[r.num].color}<div style="font-size:0.76rem;color:#4a4560;margin-top:3px;">服・インテリアに取り入れる</div></div>
+              <div class="daily-item"><strong>パワーストーン</strong>：${PLANET_DAILY[r.num].gem}<div style="font-size:0.76rem;color:#4a4560;margin-top:3px;">アクセサリーとして身につける</div></div>
+              <div class="daily-item"><strong>吉日</strong>：${PLANET_DAILY[r.num].day}<div style="font-size:0.76rem;color:#4a4560;margin-top:3px;">この日にマントラを唱え意識を向ける</div></div>
+              <div class="daily-item"><strong>取り入れたい食材</strong>：${PLANET_DAILY[r.num].food}</div>
+              <div class="daily-item full"><strong>マントラ（吉日の朝に唱える）</strong>：${PLANET_DAILY[r.num].mantra}</div>
+              <div class="daily-item full"><strong>日常の実践行動</strong>：${PLANET_DAILY[r.num].act}</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // ③ カルマ（全員表示）
+  const kd=KARMA[karma];
+  document.getElementById('r-karma-content').innerHTML=`
+    <div class="karma-box">
+      <div class="kb-title">
+        ${planetSVG(karma,32)}
+        ${kd.title}
+      </div>
+      <div class="kb-body">
+        <p><strong>輪廻転生の記憶：</strong>${kd.meaning}</p>
+        <p><strong>どんな場面が試練のサイン？</strong><br>${kd.signs}</p>
+        <p><strong>カルマを浄化するには？</strong><br>${kd.howto}</p>
+        <div class="kb-good"><strong>カルマを乗り越えた先に待つもの：</strong><br>${kd.good}</div>
+      </div>
+    </div>`;
+  updateSecNums(true);
+
+  // 数字1〜9 ギャラリー
+  document.getElementById('r-num-gallery').innerHTML=[1,2,3,4,5,6,7,8,9].map(n=>{
+    const d=NUMS[n], c=COLORS[n], cl=COLORSL[n];
+    const imgTags=(d.image||[]).map(img=>`<span class="ng-img-tag" style="background:${cl};color:${c}">${img}</span>`).join('');
+    const kwTags=d.kw.map(k=>`<span>・${k}</span>`).join('');
+    return `<div class="ng-card" style="background:linear-gradient(160deg,${cl},rgba(255,255,255,0.9));">
+      <div class="ng-art">${planetSVGSmall(n)}</div>
+      <div class="ng-num" style="color:${c}">${n}</div>
+      <div class="ng-planet" style="color:${c}">${PLANET[n]}</div>
+      <div style="font-size:0.70rem;color:#504e68;margin-bottom:4px;letter-spacing:0.04em;font-weight:500;">${PLANET_SK[n]}</div>
+      <div class="ng-images">${imgTags}</div>
+      <div class="ng-kw">${kwTags}</div>
+    </div>`;
+  }).join('');
+
+  // ⑤ グリッド
+  const str=String(day).padStart(2,'0')+String(month).padStart(2,'0')+String(year);
+  const digits=str.split('');
+  let explainHtml=`<strong>${day}日/${month}月/${year}年</strong> の数字をバラバラにすると → `;
+  explainHtml+=digits.map(d=>d==='0'?`<span style="color:#ccc;">${d}（除外）</span>`:`<span style="font-weight:700;color:${COLORS[d]||'#333'}">${d}</span>`).join('　');
+  explainHtml+='<br><br>数えると：'+Object.entries(grid).sort((a,b)=>a[0]-b[0]).map(([n,c])=>`<span style="font-weight:700;color:${COLORS[n]}">${n}が${c}回</span>`).join('　');
+  document.getElementById('r-grid-explain').innerHTML=explainHtml;
+
+  const LAYOUT=[4,9,2,3,5,7,8,1,6];
+  document.getElementById('r-grid').innerHTML=LAYOUT.map(n=>{
+    const cnt=grid[String(n)]||0;
+    if(cnt===0) return `<div class="gc gc-empty"><span class="gc-pos">${n}</span><span class="gc-chakra">${chakraSVG(n,14)}</span><span class="gc-num">空</span><span class="gc-lbl">${NUMS[n]?.kw[0]||''}</span></div>`;
+    return `<div class="gc gc-f${n}"><span class="gc-pos">${n}</span><span class="gc-chakra">${chakraSVG(n,14)}</span><span class="gc-num">${String(n).repeat(cnt)}</span><div class="gc-dots">${Array(cnt).fill('<span></span>').join('')}</div><span class="gc-lbl">${NUMS[n]?.kw[0]||''}</span></div>`;
+  }).join('');
+
+  const missingEl=document.getElementById('r-missing');
+  if(missing.length===0){
+    missingEl.innerHTML=`
+      <div style="font-size:0.78rem;color:#059669;padding:14px 16px;background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;line-height:1.8;">
+        <strong>全ての数字が揃っています。</strong><br>
+        グリッドに欠けがないため、副次的なカルマテーマはありません。ムーランクが示す主カルマに集中して取り組める魂の構成です。
+      </div>`;
+  } else {
+    missingEl.innerHTML=`
+      <h3>副次的なカルマテーマ</h3>
+      <div style="font-size:0.84rem;color:#1e1b2e;margin-bottom:14px;line-height:1.9;padding:10px 12px;background:rgba(153,27,27,0.04);border-radius:8px;border-left:3px solid #991b1b;">
+        グリッドに存在しない数字は「前世で未消化のまま持ち越したカルマのテーマ」です。ムーランクの主カルマに加えて、これらの惑星エネルギーを意識的に育てることが今世の副次的な魂の課題です。
+      </div>
+      <div style="font-size:0.80rem;color:#5b21b6;margin-bottom:14px;padding:8px 12px;background:rgba(91,33,182,0.06);border-radius:7px;line-height:1.8;">各数字の具体的な育て方（ラッキーカラー・パワーストーン・マントラ・日常実践）は、下の「数字1〜9のエネルギーと意味」セクションで確認できます</div>
+      ${missing.map(n=>`<div class="m-item">
+        <div class="m-num" style="background:${COLORSL[n]};border:1.5px solid ${COLORS[n]}44;width:44px;height:52px;flex-direction:column;gap:2px;">${chakraSVG(n,22)}<span style="font-size:0.80rem;font-weight:700;color:${COLORS[n]};line-height:1;">${n}</span></div>
+        <div class="m-text">
+          <strong style="color:#1e1b2e;border-left:3px solid ${COLORS[n]};padding-left:7px;">${PLANET[n]}（${PLANET_SK[n]}）のカルマ</strong>
+          <span style="font-size:0.76rem;color:#504e68;margin-left:4px;display:block;margin-bottom:3px;">${NUMS[n]?.kw.join('・')||''}</span>
+          <div style="font-size:0.84rem;color:#1e1b2e;line-height:1.85;margin-top:2px;">${NUMS[n]?.missing||''}</div>
+        </div>
+      </div>`).join('')}
+      ${missing.includes(5)?`<div style="margin-top:12px;padding:14px;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:10px;font-size:0.84rem;color:#991b1b;line-height:1.85;"><strong>グリッド中央「5（ブダ／水星）」が欠けています。</strong> 自己軸・自分の中心を育てることが、全てのカルマテーマの中でも最重要です。</div>`:``}
+    `;
+  }
+
+
+  // ⑤ 今この時期
+  document.getElementById('r-period-cards').innerHTML=`
+    <div class="pc" style="border-top:3px solid ${COLORS[py]}">
+      <div class="pc-art">${planetSVGSmall(py)}</div>
+      <div class="pc-name">個人年（${curYear}年）</div>
+      <div class="pc-big" style="color:${COLORS[py]}">${py}</div>
+      <div class="pc-planet" style="color:${COLORS[py]}">${PLANET[py]}</div>
+    </div>
+    <div class="pc" style="border-top:3px solid ${COLORS[pm]}">
+      <div class="pc-art">${planetSVGSmall(pm)}</div>
+      <div class="pc-name">個人月（${curMonth}月）</div>
+      <div class="pc-big" style="color:${COLORS[pm]}">${pm}</div>
+      <div class="pc-planet" style="color:${COLORS[pm]}">${PLANET[pm]}</div>
+    </div>
+    <div class="pc" style="border-top:3px solid ${COLORS[pd]}">
+      <div class="pc-art">${planetSVGSmall(pd)}</div>
+      <div class="pc-name">個人日（${curDay}日）</div>
+      <div class="pc-big" style="color:${COLORS[pd]}">${pd}</div>
+      <div class="pc-planet" style="color:${COLORS[pd]}">${PLANET[pd]}</div>
+    </div>
+  `;
+  const pyR=PERIOD_READING[py], pmR=PERIOD_READING[pm];
+  // 11年サイクル（過去2年〜今後8年）生成
+  const dashYears = Array.from({length:11},(_,i)=>{
+    const y = curYear - 2 + i;
+    const pyF = getPersonalYear(day, month, y);
+    const pr = PERIOD_READING[pyF];
+    const isPast = (y < curYear);
+    const isNow  = (y === curYear);
+    return { year:y, py:pyF, pr, isPast, isNow };
+  });
+
+  const cycleRows = dashYears.map(d=>{
+    const tagHtml = d.isPast
+      ? `<span class="yct-tag yct-tag-past">過去</span>`
+      : d.py===1||d.py===8||d.py===3
+      ? `<span class="yct-tag yct-tag-good">飛躍の年</span>`
+      : d.py===5||d.py===9
+      ? `<span class="yct-tag yct-tag-change">変化の年</span>`
+      : d.py===2||d.py===7
+      ? `<span class="yct-tag yct-tag-care">内省の年</span>`
+      : `<span class="yct-tag" style="background:rgba(124,58,237,0.08);color:#5b21b6;">充実の年</span>`;
+    return `<tr class="${d.isNow?'current-year':''} ${d.isPast?'past-year':''}">
+      <td><strong>${d.year}年</strong>${d.isNow?`<span class="yct-now">今年</span>`:''}</td>
+      <td><span class="yct-num" style="color:${COLORS[d.py]}">${d.py}</span> ${PLANET[d.py]}</td>
+      <td>${d.pr?.theme||''}</td>
+      <td>${tagHtml}</td>
+    </tr>`;
+  }).join('');
+
+  const dashNarration = dashYears.map(d=>{
+    const borderStyle = d.isNow ? `border-left:4px solid ${COLORS[d.py]};padding-left:14px;` : '';
+    const pyColor = d.isPast ? '#6b7280' : COLORS[d.py];
+    const yearDiff = curYear - d.year;
+    const yearLabel = yearDiff===1 ? '昨年' : yearDiff===2 ? '一昨年' : '';
+    return `
+    <div class="dash-card ${d.isPast?'dash-past':d.isNow?'dash-now':'dash-future'}">
+      <div class="dash-card-header" style="${borderStyle}">
+        <span class="dash-year">${d.year}年${yearLabel?`<span style="font-size:0.70rem;color:#9ca3af;margin-left:4px;">（${yearLabel}）</span>`:''}</span>
+        ${d.isNow?`<span class="dash-now-badge">今年</span>`:''}
+        <span class="dash-py" style="color:${pyColor}">個人年 ${d.py} / ${PLANET[d.py]}</span>
+        <span class="dash-theme">「${d.pr?.theme||''}」${d.isPast?'の年でした':''}</span>
+      </div>
+      ${!d.isPast?`<div class="dash-body">${d.pr?.body||''}</div>`:''}
+      ${!d.isPast?`<div class="dash-hints">
+        <span class="dash-good">◎ ${d.pr?.good||''}</span>
+        <span class="dash-care">△ ${d.pr?.care||''}</span>
+      </div>`:''}
+    </div>`;
+  }).join('');
+
+  document.getElementById('r-period-reading').innerHTML=`
+    <div class="num-meaning" style="border-top:4px solid ${COLORS[py]};margin-top:0;">
+      <div class="nm-body">
+        <div class="nm-section">${curYear}年の個人年テーマ「${pyR?.theme||''}」</div>
+        <p>${pyR?.body||''}</p>
+        <p style="margin-top:6px;font-size:0.74rem;"><span style="color:#065f46;font-weight:600;">進めやすいこと：</span><span style="color:#4a4560;">${pyR?.good||''}</span>　<span style="color:#92400e;font-weight:600;">注意：</span><span style="color:#4a4560;">${pyR?.care||''}</span></p>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(124,58,237,0.1);">
+          <div class="nm-section">${curMonth}月の個人月テーマ「${pmR?.theme||''}」</div>
+          <p>${pmR?.body||''}</p>
+        </div>
+      </div>
+    </div>
+    <div class="explain-box" style="margin-top:16px;">
+      <div class="ex-title">11年サイクル一覧（ダシャー周期）</div>
+      <p style="margin-bottom:10px;font-size:0.77rem;color:var(--muted);">過去2年の振り返りから今後8年先まで、あなたの魂が体験する惑星周期を一覧でご覧いただけます。</p>
+      <table class="year-cycle-table">
+        <thead><tr><th>年</th><th>個人年</th><th>テーマ</th><th>傾向</th></tr></thead>
+        <tbody>${cycleRows}</tbody>
+      </table>
+    </div>
+    <div class="explain-box" style="margin-top:16px;">
+      <div class="ex-title">年ごとの詳しい鑑定</div>
+      <p style="margin-bottom:14px;font-size:0.77rem;color:var(--muted);">それぞれの年のエネルギーを詳しくお伝えします。あなたの魂がどのような流れを体験するかを、過去〜未来をつなぐ物語として読んでみてください。</p>
+      <div class="dash-narration">${dashNarration}</div>
+    </div>
+  `;
+
+  // ⑥ 名前
+  const nameSec=document.getElementById('r-name-section');
+  const nameCards=document.getElementById('r-name-cards');
+  if(nameParts.length===0){ nameSec.style.display='none'; }
+  else {
+    nameSec.style.display='';
+    nameCards.innerHTML=nameParts.map(p=>{
+      const c=COLORS[p.reduced]||'#666', cl=COLORSL[p.reduced]||'#f5f5f5';
+      const sumText=p.total===p.reduced?`${p.total}`:`${p.total} → ${p.reduced}`;
+      return `
+        <div class="name-card">
+          <div class="nc-title">${p.isFull?'フルネーム（苗字＋名前）':'苗字 / 名前 それぞれ'}</div>
+          <div class="nc-kana" style="color:${c}">${p.kana}</div>
+          <div class="nc-roma">${p.roma}</div>
+          <div class="letter-row">${buildLetterRow(p.roma)}</div>
+          <div class="nc-sum">全文字の合計：${sumText}</div>
+          <div class="nc-result" style="background:${cl};border-color:${c}33;">
+            <div class="nr-num" style="color:${c}">${p.reduced}</div>
+            <div class="nr-info">
+              <div class="nr-label">ナーマンク</div>
+              <div class="nr-title" style="color:${c}">${PLANET[p.reduced]||''}</div>
+              <div class="nr-desc">${NUMS[p.reduced]?.kw.join('・')||''}</div>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ⑦ アドバイス
+  const mulD=NUMS[mul], bhaD=NUMS[bha];
+  const karmaAdv=karma?`<li>${KARMA[karma].howto}</li>`:'';
+  document.getElementById('r-advice').innerHTML=`
+    <div class="advice-grid">
+      <div class="advice-card advice-good">
+        <div class="advice-label">今、力を発揮できること</div>
+        <div class="advice-body"><ul>${mulD.good.map(g=>`<li>${g}</li>`).join('')}</ul>
+          <p style="margin-top:10px;font-size:0.7rem;color:#065f46;">ムーランク ${mul}（${PLANET[mul]}）の強みを活かす場面です</p></div>
+      </div>
+      <div class="advice-card advice-care">
+        <div class="advice-label">気をつけたいこと</div>
+        <div class="advice-body"><ul>${mulD.care.map(c=>`<li>${c}</li>`).join('')}${karmaAdv}</ul>
+          <p style="margin-top:10px;font-size:0.7rem;color:#92400e;">これらは罰ではなく、あなたの成長ポイントのサインです</p></div>
+      </div>
+      <div class="advice-card advice-action">
+        <div class="advice-label">今すぐできるアクション</div>
+        <div class="advice-body"><p>${mulD.action}</p>
+          ${missing.length>0?`<p style="margin-top:8px;">欠けた数字（${missing.join('・')}）は「苦手・後回しにしがちなテーマ」です。<br>具体的には→ 下の「数字1〜9のエネルギーと意味」セクションでその数字のラッキーカラーを服に取り入れる、吉日にマントラを唱える、食材を食事に加えるなど小さな一歩から始めてみてください。</p>`:''}</div>
+      </div>
+      <div class="advice-card advice-period">
+        <div class="advice-label">今この時期のテーマ（個人年${py}）</div>
+        <div class="advice-body"><p><strong>「${PERIOD_READING[py]?.theme}」</strong>の時期です。</p>
+          <p>${PERIOD_READING[py]?.body}</p>
+          <p style="margin-top:8px;"><span style="color:#065f46;font-weight:600;">進めやすい：</span>${PERIOD_READING[py]?.good}<br><span style="color:#92400e;font-weight:600;">注意：</span>${PERIOD_READING[py]?.care}</p></div>
+      </div>
+    </div>
+    <div class="explain-box" style="margin-top:14px;border-color:${COLORS[bha]}33;">
+      <div class="ex-title" style="color:${COLORS[bha]};">運命の方向（バーグヤンク ${bha}）へ向かうために</div>
+      <p>${bhaD.bhagyank}</p>
+      <p style="margin-top:8px;"><strong>これからのヒント：</strong>${bhaD.action}</p>
+    </div>
+  `;
+
+  // ⑧ 総合
+  const strongNums = Object.entries(grid).filter(([,c])=>c>=2).map(([n,c])=>`${n}（${PLANET[n]}・${c}回）`).join('、');
+  const missingDesc = missing.length===0
+    ? `生年月日に1〜9のすべての数字が含まれており、<span class="hl">バランスのとれたエネルギー配置</span>を持っています。特定の苦手分野をつくらず、多様な力を使いこなせる可能性があります。`
+    : missing.includes(5)
+      ? `グリッドの中心「5（ブダ／水星）」が欠けています。これは<span class="hl">自分の軸・中心点を育てること</span>が今世の最重要テーマであるサインです。周囲に流されず、自分自身の価値観と判断軸を築いていくことが、あなたの魂が選んだ最大の修行です。`
+      : `グリッドに欠けた数字は <strong>${missing.join('・')}</strong>（${missing.map(n=>PLANET[n]).join('・')}）です。これらは弱さではなく、<span class="hl">今世で意識的に育てるよう魂が選んだテーマ</span>です。困難や遅れを感じやすい反面、意識して取り組むことで誰よりも深くそのエネルギーを体得できます。`;
+  document.getElementById('r-overall').innerHTML=`
+    <div class="om-label">総合メッセージ — あなたの魂の地図</div>
+
+    <div class="om-section">
+      <div class="om-section-title">① あなたという人の本質（ムーランク ${mul}）</div>
+      <p>あなたは <strong>${PLANET[mul]}（${PLANET_SK[mul]}・${mul}）</strong> のエネルギーを魂の本質として持って生まれました。これはムーランク（誕生日から導く数字）が示す、生まれながらの性格・本能・素の自分です。${NUMS[mul].mulank}意識しなくても自然に出てくる行動パターン、直感的な反応の仕方、物事への第一アプローチに、このエネルギーが色濃く表れています。</p>
+    </div>
+
+    <div class="om-section">
+      <div class="om-section-title">② 人生が向かっている方向（バーグヤンク ${bha}）</div>
+      <p>バーグヤンク（生年月日の全数字を合計した数）は <strong>${PLANET[bha]}（${PLANET_SK[bha]}・${bha}）</strong> です。これは魂が今世で向かっていく大きな方向性・使命・目指す先を示しています。${NUMS[bha].bhagyank}ムーランク（${mul}）の素の自分のままでは辿り着きにくく、意識的な努力と成長を通じて開花する人生のテーマです。</p>
+    </div>
+
+    <div class="om-section">
+      <div class="om-section-title">③ グリッドが語るエネルギーの地図</div>
+      <p>${strongNums ? `グリッドでは <strong>${strongNums}</strong> のエネルギーが特に強く、これらは生まれながらの強みとして発揮されやすい面です。` : ''}${missingDesc}</p>
+    </div>
+
+    ${karma ? `<div class="om-section">
+      <div class="om-section-title">④ カルマのテーマ（カルマ数 ${karma}：${PLANET[karma]}）</div>
+      <p>誕生日が <strong>${day}日</strong> であることから、<strong>${PLANET[karma]}（${PLANET_SK[karma]}・数字${karma}）のカルマ</strong>を持ちます。これは過去世から持ち越した魂の課題であり、今世で取り組むことで解放されるテーマです。${KARMA[karma].howto}</p>
+    </div>` : ''}
+
+    <div class="om-section">
+      <div class="om-section-title">${karma ? '⑤' : '④'} 今この時期のテーマ（個人年 ${py}：${PERIOD_READING[py]?.theme}）</div>
+      <p>現在あなたは <strong>個人年 ${py}（${PLANET[py]}／${PLANET_SK[py]}）</strong>「<strong>${PERIOD_READING[py]?.theme}</strong>」の時期にいます。${PERIOD_READING[py]?.body}この時期に <span class="hl2">${PERIOD_READING[py]?.good}</span> を意識することで、エネルギーを最大限に活かせます。一方で <span class="hl3">${PERIOD_READING[py]?.care}</span> には注意が必要な時期です。</p>
+    </div>
+
+    <div class="om-section" style="background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(219,39,119,0.03));border-radius:14px;padding:18px 20px;">
+      <div class="om-section-title">${karma ? '⑥' : '⑤'} 統合メッセージ</div>
+      <p>あなたのムーランクは <strong>${PLANET[mul]}（数字${mul}）</strong>。これが「素の自分・カルマの核」です。<br>バーグヤンクは <strong>${PLANET[bha]}（数字${bha}）</strong>。これが「魂が向かっていく先・人生の使命」です。<br><br>つまり、<span class="hl">「${PLANET[mul]}として生まれ、${PLANET[bha]}の世界へ歩んでいく」</span>のが今世のあなたの旅の構造です。${missing.length>0?`グリッドの欠けた数字（${missing.map(n=>PLANET[n]).join('・')}）は弱点ではなく、<span class="hl2">意識的に育てることで開花する伸びしろ</span>です。`:''} 数字が示すのは運命という檻ではなく、<span class="hl2">魂が自分自身のために選んできた地図</span>。この鑑定が、あなた自身をより深く理解する一助になれば幸いです。</p>
+    </div>
+  `;
+
+  document.getElementById('form-section').style.display='none';
+  document.getElementById('results').classList.add('visible');
+  setTimeout(()=>{
+    document.querySelectorAll('.reveal').forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('shown'),i*120);
+    });
+  },100);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function resetForm(){
+  document.getElementById('results').classList.remove('visible');
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.remove('shown'));
+  document.getElementById('form-section').style.display='';
+  ['inp-sei','inp-mei','inp-year','inp-month','inp-day'].forEach(id=>document.getElementById(id).value='');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+initSelects();
+</script>
+</body>
+</html>
